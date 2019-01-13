@@ -1,0 +1,16 @@
+{
+  "name": "github.api",
+  "version": "0.0.0",
+  "description": "A simple JavaScript GitHub API wrapper.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "GitHub",
+    "API",
+    "API Wrapper"
+  ],
+  "author": "Steffen Knaup",
+  "license": "ISC"
+}
