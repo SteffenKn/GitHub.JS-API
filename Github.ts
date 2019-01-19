@@ -15,7 +15,7 @@ export class GithubApi {
     this._configService.set('authToken', null);
   }
 
-  public get endpoint() {
+  public get endpoint(): string {
     return this._configService.get('endpoint');
   }
 
@@ -23,7 +23,7 @@ export class GithubApi {
     this._configService.set('endpoint', endpoint);
   }
 
-  public get authToken() {
+  public get authToken(): string {
     return this._configService.get('authToken');
   }
 
@@ -31,13 +31,13 @@ export class GithubApi {
     this._configService.set('authToken', authToken);
   }
 
-  public getOrga(orgaName) {
+  public getOrga(orgaName): Orga {
     const orga = new Orga(this._httpClient, orgaName);
 
     return orga;
   }
 
-  public getUser(username) {
+  public getUser(username): User {
     const user = new User(this._httpClient, username);
 
     return user;
