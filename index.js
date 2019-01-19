@@ -3,6 +3,7 @@
 const HttpClient = require('./lib/HttpClient');
 const ConfigService = require('./lib/ConfigService');
 const Orga = require('./lib/Github/Orga');
+const User = require('./lib/Github/User');
 
 class GithubApi {
 
@@ -34,6 +35,12 @@ class GithubApi {
     const orga = new Orga(this._httpClient, orgaName);
 
     return orga;
+  }
+
+  getUser(username) {
+    const user = new User(this._httpClient, username);
+
+    return user;
   }
 }
 
