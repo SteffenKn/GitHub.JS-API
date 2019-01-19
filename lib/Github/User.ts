@@ -23,7 +23,7 @@ export class User {
     throw new Error('Not Implemented!');
   }
 
-  public get data(): Promise<JSON> {
+  public get asJson(): Promise<JSON> {
     const url = `/user/${this._username}`;
 
     return this._httpClient.get(url);

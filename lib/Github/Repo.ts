@@ -13,7 +13,7 @@ export class Repo {
     this._repoName = repoName;
   }
 
-  public get data(): Promise<JSON> {
+  public get asJson(): Promise<JSON> {
     const url = `/repos/${this._ownerName}/${this._repoName}`;
 
     return this._httpClient.get(url);
