@@ -1,21 +1,23 @@
-"use strict";
+import fetch from 'node-fetch';
 
-const fetch = require('node-fetch');
+import {ConfigService} from './ConfigService';
 
-class HttpClient {
+export class HttpClient {
+  private _configService: ConfigService;
+
   constructor(configService) {
     this._configService = configService;
 
   }
 
-  async get(path) {
+  public async get(path): Promise<JSON> {
     const url = this._configService.get('endpoint') + path;
 
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchResult = await fetch(url);
+        const fetchResult: any = await fetch(url);
   
-        const result = await fetchResult.json();
+        const result: JSON = await fetchResult.json();
   
         resolve(result);
       } catch(error) {
@@ -24,9 +26,7 @@ class HttpClient {
     });
   }
 
-  get endpoint() {
+  public get endpoint(): string {
     return this._configService.get('endpoint');
   }
 }
-
-module.exports = HttpClient;
