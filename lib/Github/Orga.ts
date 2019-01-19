@@ -1,26 +1,26 @@
-"use static";
+import {Repo} from './Repo';
+import {HttpClient} from '../HttpClient';
 
-const Repo = require('./Repo');
+export class Orga {
+  private _httpClient: HttpClient;
+  private _orgaName: string;
 
-class Orga {
   constructor(httpClient, orgaName) {
     this._httpClient = httpClient;
     this._orgaName = orgaName;
   }
 
-  getRepo(repoName) {
+  public getRepo(repoName): Repo {
     return new Repo(this._httpClient, this._orgaName, repoName);
   }
 
-  get repos() {
+  public get repos(): Array<Repo> {
     throw new Error('Not Implemented!');
   }
 
-  get data() {
+  public get data(): Promise<JSON> {
     const url = `/orgs/${this._orgaName}`;
 
     return this._httpClient.get(url);
   }
 }
-
-module.exports = Orga;

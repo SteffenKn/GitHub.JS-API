@@ -2,7 +2,7 @@
   "name": "github-js-api",
   "version": "0.0.0",
   "description": "A simple JavaScript GitHub API wrapper.",
-  "main": "index.js",
+  "main": "Github.js",
   "scripts": {
     "test": "npm test"
   },

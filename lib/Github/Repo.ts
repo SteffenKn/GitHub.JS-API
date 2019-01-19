@@ -1,6 +1,10 @@
-"use strict";
+import {HttpClient} from '../HttpClient';
 
-class Repo {
+export class Repo {
+  private _httpClient: HttpClient;
+
+  private _ownerName: string;
+  private _repoName: string;
 
   constructor(httpClient, ownerName, repoName) {
     this._httpClient = httpClient;
@@ -9,11 +13,9 @@ class Repo {
     this._repoName = repoName;
   }
 
-  get data() {
+  public get data(): Promise<JSON> {
     const url = `/repos/${this._ownerName}/${this._repoName}`;
 
     return this._httpClient.get(url);
   }
 }
-
-module.exports = Repo;
