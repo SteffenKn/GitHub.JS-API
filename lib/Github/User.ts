@@ -19,8 +19,22 @@ export class User {
     return this._username;
   }
 
-  public get repos(): Array<Repo> {
-    throw new Error('Not Implemented!');
+  public async getAllRepos(): Promise<Array<Repo>> {
+    const url: string = `/users/${this._username}/repos`;
+
+    const response: JSON = await this._httpClient.get(url);
+
+    const repos: Array<Repo> = [];
+
+    for(const responseIndex in response) {
+      const repoData: JSON = response[responseIndex];
+
+      const repo: Repo = Repo.fromData(this._httpClient, repoData);
+
+      repos.push(repo);
+    }
+
+    return repos;
   }
 
   public asJson(): Promise<JSON> {
