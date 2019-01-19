@@ -7,12 +7,17 @@ export class GithubApi {
   private _configService: ConfigService;
   private _httpClient: HttpClient;
 
-  constructor() {
+  constructor(authToken?: string) {
     this._configService = new ConfigService();
     this._httpClient = new HttpClient(this._configService);
 
+    const authTokenIsSet: boolean = authToken !== undefined;
+    const authTokenToUse: string | null = authTokenIsSet
+                ? (authToken as string)
+                : null;
+
     this._configService.set('endpoint', 'https://api.github.com')
-    this._configService.set('authToken', null);
+    this._configService.set('authToken', authTokenToUse);
   }
 
   public get endpoint(): string {
