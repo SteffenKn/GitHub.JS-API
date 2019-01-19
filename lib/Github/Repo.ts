@@ -18,4 +18,8 @@ export class Repo {
 
     return this._httpClient.get(url);
   }
+
+  public asJson(): Promise<JSON> {
+    return this._data;
+  }
 }
