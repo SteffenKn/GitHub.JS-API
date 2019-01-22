@@ -4,7 +4,8 @@
   "description": "A simple JavaScript GitHub API wrapper.",
   "main": "dist/Github.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "tslint --project ."
   },
   "keywords": [
     "GitHub",
@@ -15,5 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "2.3.0"
+  },
+  "devDependencies": {
+    "tslint": "^5.12.1",
+    "tslint-config-5minds": "^1.0.6",
+    "typescript": "^3.2.4"
   }
 }
