@@ -14,16 +14,18 @@ export class Repo {
     this._repoName = repoName;
 
     const noData: boolean = data === undefined;
-    if(noData) {
+    if (noData) {
       this._data = this.getData();
     } else {
-      this._data = new Promise((resolve) => {
+      this._data = new Promise((resolve: Function): void => {
         resolve(data);
+
+        return;
       });
     }
   }
 
-  public static fromData(httpClient: HttpClient, data: JSON) {
+  public static fromData(httpClient: HttpClient, data: JSON): Repo {
     const owner: JSON = data['owner'];
 
     const repoName: string = data['name'];
@@ -33,7 +35,7 @@ export class Repo {
   }
 
   public getData(): Promise<JSON> {
-    const url = `/repos/${this._ownerName}/${this._repoName}`;
+    const url: string = `/repos/${this._ownerName}/${this._repoName}`;
 
     return this._httpClient.get(url);
   }

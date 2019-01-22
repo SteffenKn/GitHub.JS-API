@@ -1,16 +1,16 @@
-import {Repo} from './Repo';
 import {HttpClient} from '../HttpClient';
+import {Repo} from './Repo';
 
 export class Orga {
   private _httpClient: HttpClient;
   private _orgaName: string;
 
-  constructor(httpClient, orgaName) {
+  constructor(httpClient: HttpClient, orgaName: string) {
     this._httpClient = httpClient;
     this._orgaName = orgaName;
   }
 
-  public getRepo(repoName): Repo {
+  public getRepo(repoName: string): Repo {
     return new Repo(this._httpClient, this._orgaName, repoName);
   }
 
@@ -21,7 +21,7 @@ export class Orga {
 
     const repos: Array<Repo> = [];
 
-    for(const responseIndex in response) {
+    for (const responseIndex in response) {
       const repoData: JSON = response[responseIndex];
 
       const repo: Repo = Repo.fromData(this._httpClient, repoData);
@@ -33,7 +33,7 @@ export class Orga {
   }
 
   public asJson(): Promise<JSON> {
-    const url = `/orgs/${this._orgaName}`;
+    const url: string = `/orgs/${this._orgaName}`;
 
     return this._httpClient.get(url);
   }

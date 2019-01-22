@@ -6,12 +6,12 @@ export class User {
   private _httpClient: HttpClient;
   private _username: string;
 
-  constructor(httpClient, username) {
+  constructor(httpClient: HttpClient, username: string) {
     this._httpClient = httpClient;
     this._username = username;
   }
 
-  public getRepo(repoName): Repo {
+  public getRepo(repoName: string): Repo {
     return new Repo(this._httpClient, this._username, repoName);
   }
 
@@ -26,7 +26,7 @@ export class User {
 
     const repos: Array<Repo> = [];
 
-    for(const responseIndex in response) {
+    for (const responseIndex in response) {
       const repoData: JSON = response[responseIndex];
 
       const repo: Repo = Repo.fromData(this._httpClient, repoData);
@@ -38,7 +38,7 @@ export class User {
   }
 
   public asJson(): Promise<JSON> {
-    const url = `/user/${this._username}`;
+    const url: string = `/user/${this._username}`;
 
     return this._httpClient.get(url);
   }
