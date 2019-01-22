@@ -44,18 +44,18 @@ pipeline {
         sh('npm install')
       }
     }
-    // stage('lint') {
-    //   steps {
-    //     sh('node --version')
-    //     sh('npm run lint')
-    //   }
-    // }
-    // stage('build') {
-    //   steps {
-    //     sh('node --version')
-    //     sh('npm run build')
-    //   }
-    // }
+    stage('lint') {
+      steps {
+        sh('node --version')
+        sh('npm run lint')
+      }
+    }
+    stage('build') {
+      steps {
+        sh('node --version')
+        sh('npm run build')
+      }
+    }
     stage('cleanup') {
       steps {
         script {
