@@ -4,6 +4,7 @@
   "description": "A simple JavaScript GitHub API wrapper.",
   "main": "dist/Github.js",
   "scripts": {
+    "build": "tsc"
   },
   "keywords": [
     "GitHub",
