@@ -1,7 +1,7 @@
-import {HttpClient} from './lib/HttpClient';
 import {ConfigService} from './lib/ConfigService';
 import {Orga} from './lib/Github/Orga';
 import {User} from './lib/Github/User';
+import {HttpClient} from './lib/HttpClient';
 
 export class GithubApi {
   private _configService: ConfigService;
@@ -16,15 +16,15 @@ export class GithubApi {
                 ? (authToken as string)
                 : null;
 
-    this._configService.set('endpoint', 'https://api.github.com')
-    this._configService.set('authToken', authTokenToUse);
+    this._configService.set('endpoint', 'https://api.github.com');
+    this._configService.set('authToken', (authTokenToUse as string));
   }
 
   public get endpoint(): string {
     return this._configService.get('endpoint');
   }
 
-  public set endpoint(endpoint) {
+  public set endpoint(endpoint: string) {
     this._configService.set('endpoint', endpoint);
   }
 
@@ -32,18 +32,18 @@ export class GithubApi {
     return this._configService.get('authToken');
   }
 
-  public set authToken(authToken) {
+  public set authToken(authToken: string) {
     this._configService.set('authToken', authToken);
   }
 
-  public getOrga(orgaName): Orga {
-    const orga = new Orga(this._httpClient, orgaName);
+  public getOrga(orgaName: string): Orga {
+    const orga: Orga = new Orga(this._httpClient, orgaName);
 
     return orga;
   }
 
-  public getUser(username): User {
-    const user = new User(this._httpClient, username);
+  public getUser(username: string): User {
+    const user: User = new User(this._httpClient, username);
 
     return user;
   }
