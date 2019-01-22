@@ -11,7 +11,6 @@ export class HttpClient {
 
   constructor(configService) {
     this._configService = configService;
-
   }
 
   public async get(path): Promise<JSON> {
@@ -22,8 +21,9 @@ export class HttpClient {
     return new Promise(async (resolve, reject) => {
       try {
         const fetchResult: any = await fetch(url, { headers: header });
+
         const result: JSON = await fetchResult.json();
-  
+
         resolve(result);
       } catch(error) {
         reject(error);
