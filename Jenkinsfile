@@ -76,6 +76,15 @@ pipeline {
       }
     }
 
+
+    stage('Test') {
+      steps {
+        sh('node --version')
+
+        sh('npm test')
+      }
+    }
+
     stage('Cleanup') {
       steps {
         script {
