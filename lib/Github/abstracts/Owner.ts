@@ -10,7 +10,7 @@ export abstract class Owner {
     this._name = name;
   }
 
-  public async getAllRepos(): Promise<Array<Repo>> {
+  public async getAllPublicRepos(): Promise<Array<Repo>> {
     const baseUrl: string = this._getBaseUrl();
     const url: string = `${baseUrl}/repos`;
 
