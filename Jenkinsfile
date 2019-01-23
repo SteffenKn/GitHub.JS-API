@@ -33,14 +33,9 @@ pipeline {
   }
 
   stages {
-    stage('pre') {
-      steps {
-        setBuildStatus('Building...', 'PENDING')
-        checkout scm
-      }
-    }
     stage('prepare') {
       steps {
+        setBuildStatus('Building...', 'PENDING')
         script {
           raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true)
           package_version = raw_package_version.trim()
