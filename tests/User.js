@@ -11,7 +11,6 @@ describe ('User Tests', () => {
 
   it ('Should be able to create an user', async () => {
     user = github.getUser("octocat");
-    console.log(user);
 
     const userData = await user.asJson();
     const userName = userData['name'];
