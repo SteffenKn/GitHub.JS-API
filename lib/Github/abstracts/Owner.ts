@@ -29,6 +29,10 @@ export abstract class Owner {
     return repos;
   }
 
+  public getRepo(repoName: string): Repo {
+    return new Repo(this._httpClient, this, repoName);
+  }
+
   protected abstract _getBaseUrl(): string;
 
   public get name(): string {
