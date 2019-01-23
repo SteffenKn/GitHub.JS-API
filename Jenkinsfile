@@ -33,7 +33,7 @@ pipeline {
   }
 
   stages {
-    stage('prepare') {
+    stage('Prepare') {
       steps {
         setBuildStatus('Building...', 'PENDING')
         script {
@@ -49,25 +49,25 @@ pipeline {
         }
       }
     }
-    stage('install') {
+    stage('Install') {
       steps {
         sh('node --version')
         sh('npm install')
       }
     }
-    stage('lint') {
+    stage('Lint') {
       steps {
         sh('node --version')
         sh('npm run lint')
       }
     }
-    stage('build') {
+    stage('Build') {
       steps {
         sh('node --version')
         sh('npm run build')
       }
     }
-    stage('cleanup') {
+    stage('Cleanup') {
       steps {
         script {
           // this stage just exists, so the cleanup-work that happens in the post-script
@@ -84,10 +84,10 @@ pipeline {
       }
     }
     success {
-      setBuildStatus("Build succeeded", "SUCCESS");
+      setBuildStatus('Build succeeded.', 'SUCCESS');
     }
     failure {
-      setBuildStatus("Build failed", "FAILURE");
+      setBuildStatus('Build failed!', 'FAILURE');
     }
   }
 }
