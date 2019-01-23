@@ -16,10 +16,4 @@ export class User extends Owner {
   protected _getBaseUrl(): string {
     return `/users/${this._name}`;
   }
-
-  public asJson(): Promise<JSON> {
-    const url: string = this._getBaseUrl();
-
-    return this._httpClient.get(url);
-  }
 }

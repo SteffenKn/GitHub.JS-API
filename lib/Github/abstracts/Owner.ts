@@ -34,4 +34,10 @@ export abstract class Owner {
   public get name(): string {
     return this._name;
   }
+
+  public asJson(): Promise<JSON> {
+    const url: string = this._getBaseUrl();
+
+    return this._httpClient.get(url);
+  }
 }
