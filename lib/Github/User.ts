@@ -13,12 +13,12 @@ export class User extends Owner {
     return new Repo(this._httpClient, this, repoName);
   }
 
-  protected _getUrl(): string {
-    return `/users/${this._name}/repos`;
+  protected _getBaseUrl(): string {
+    return `/users/${this._name}`;
   }
 
   public asJson(): Promise<JSON> {
-    const url: string = `/users/${this._name}`;
+    const url: string = this._getBaseUrl();
 
     return this._httpClient.get(url);
   }
