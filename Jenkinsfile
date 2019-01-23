@@ -33,6 +33,12 @@ pipeline {
   }
 
   stages {
+    stage('pre') {
+      steps {
+        setBuildStatus('Building...', 'PENDING')
+        checkout scm
+      }
+    }
     stage('prepare') {
       steps {
         script {
