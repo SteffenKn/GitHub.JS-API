@@ -36,37 +36,46 @@ pipeline {
     stage('Prepare') {
       steps {
         setBuildStatus('Building...', 'PENDING')
+
         script {
           raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true)
           package_version = raw_package_version.trim()
-          echo("Package version is '${package_version}'")
-
           branch = env.BRANCH_NAME;
+
+          echo("Package version is '${package_version}'")
           echo("Branch is '${branch}'")
         }
+
         nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
           sh('node --version')
         }
       }
     }
+
     stage('Install') {
       steps {
         sh('node --version')
+
         sh('npm install')
       }
     }
+
     stage('Lint') {
       steps {
         sh('node --version')
+
         sh('npm run lint')
       }
     }
+
     stage('Build') {
       steps {
         sh('node --version')
+
         sh('npm run build')
       }
     }
+
     stage('Cleanup') {
       steps {
         script {
@@ -77,15 +86,18 @@ pipeline {
       }
     }
   }
+
   post {
     always {
       script {
         cleanup_workspace();
       }
     }
+
     success {
       setBuildStatus('Build succeeded.', 'SUCCESS');
     }
+
     failure {
       setBuildStatus('Build failed!', 'FAILURE');
     }
