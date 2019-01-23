@@ -16,10 +16,4 @@ export class Orga extends Owner {
   public _getBaseUrl(): string {
     return `/orgs/${this._name}`;
   }
-
-  public asJson(): Promise<JSON> {
-    const url: string = this._getBaseUrl();
-
-    return this._httpClient.get(url);
-  }
 }
