@@ -18,7 +18,7 @@ export class User extends Owner {
   }
 
   public asJson(): Promise<JSON> {
-    const url: string = `/user/${this._name}`;
+    const url: string = `/users/${this._name}`;
 
     return this._httpClient.get(url);
   }
