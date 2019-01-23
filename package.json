@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint --project .",
-    "test": "mocha tests/*.js --timeout 15000 --exit"
+    "test": "mocha tests/*.js --timeout 15000 --exit "
   },
   "keywords": [
     "GitHub",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "optimist": "^0.6.1",
     "tslint": "^5.12.1",
     "tslint-config-5minds": "^1.0.6",
     "typescript": "^3.2.4"

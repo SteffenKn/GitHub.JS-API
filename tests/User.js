@@ -1,13 +1,16 @@
 'use strict';
-const config = require('./config.json');
 const Github = require('../dist/Github.js');
 
+const argv = require('optimist').argv;
 const chai = require('chai'); 
 const expect = chai.expect;
 
-
 const github = new Github.GithubApi();
-github.authToken = config.authToken;
+
+const authTokenSet = argv.authToken !== undefined;
+if (authTokenSet) {
+  github.authToken = argv.authToken;
+}
 
 describe ('User Tests', () => {
   let user;
