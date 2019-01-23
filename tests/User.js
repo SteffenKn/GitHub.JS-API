@@ -29,7 +29,7 @@ describe ('User Tests', () => {
   });
 
   it ('Should be able to get all repos', async () => {
-    const repos = await user.getAllRepos();
+    const repos = await user.getAllPublicRepos();
     const repoNames = [];
 
     for(const singleRepo of repos) {

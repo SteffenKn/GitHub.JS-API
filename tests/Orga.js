@@ -28,7 +28,7 @@ describe ('Orga Tests', () => {
   });
 
   it ('Should be able to get all repos', async () => {
-    const repos = await orga.getAllRepos();
+    const repos = await orga.getAllPublicRepos();
     const repoNames = [];
 
     for(const singleRepo of repos) {
