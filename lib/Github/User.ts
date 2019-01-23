@@ -1,44 +1,24 @@
 import {HttpClient} from '../HttpClient';
 
+import {Owner} from './abstracts/Owner';
 import {Repo} from './Repo';
 
-export class User {
-  private _httpClient: HttpClient;
-  private _username: string;
+export class User extends Owner {
 
-  constructor(httpClient: HttpClient, username: string) {
-    this._httpClient = httpClient;
-    this._username = username;
+  constructor(httpClient: HttpClient, name: string) {
+    super(httpClient, name);
   }
 
   public getRepo(repoName: string): Repo {
-    return new Repo(this._httpClient, this._username, repoName);
+    return new Repo(this._httpClient, this, repoName);
   }
 
-  public get username(): string {
-    return this._username;
-  }
-
-  public async getAllRepos(): Promise<Array<Repo>> {
-    const url: string = `/users/${this._username}/repos`;
-
-    const response: JSON = await this._httpClient.get(url);
-
-    const repos: Array<Repo> = [];
-
-    for (const responseIndex in response) {
-      const repoData: JSON = response[responseIndex];
-
-      const repo: Repo = Repo.fromData(this._httpClient, repoData);
-
-      repos.push(repo);
-    }
-
-    return repos;
+  protected _getUrl(): string {
+    return `/users/${this._name}/repos`;
   }
 
   public asJson(): Promise<JSON> {
-    const url: string = `/user/${this._username}`;
+    const url: string = `/user/${this._name}`;
 
     return this._httpClient.get(url);
   }

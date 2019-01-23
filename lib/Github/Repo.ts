@@ -1,17 +1,18 @@
 import {HttpClient} from '../HttpClient';
+import {Owner} from './abstracts/Owner';
 
 export class Repo {
   private _httpClient: HttpClient;
 
-  private _ownerName: string;
-  private _repoName: string;
+  private _owner: Owner;
+  private _name: string;
   private _data: Promise<JSON>;
 
-  constructor(httpClient: HttpClient, ownerName: string, repoName: string, data?: JSON) {
+  constructor(httpClient: HttpClient, owner: Owner, name: string, data?: JSON) {
     this._httpClient = httpClient;
 
-    this._ownerName = ownerName;
-    this._repoName = repoName;
+    this._owner = owner;
+    this._name = name;
 
     const noData: boolean = data === undefined;
     if (noData) {
@@ -25,19 +26,28 @@ export class Repo {
     }
   }
 
-  public static fromData(httpClient: HttpClient, data: JSON): Repo {
-    const owner: JSON = data['owner'];
-
+  public static fromData(httpClient: HttpClient, owner: Owner, data: JSON): Repo {
     const repoName: string = data['name'];
-    const ownerName: string = owner['login'];
 
-    return new Repo(httpClient, repoName, ownerName, data);
+    return new Repo(httpClient, owner, repoName, data);
   }
 
   public getData(): Promise<JSON> {
-    const url: string = `/repos/${this._ownerName}/${this._repoName}`;
+    const url: string = `/repos/${this._owner.name}/${this._name}`;
 
     return this._httpClient.get(url);
+  }
+
+  public get ownerName(): string {
+    return this._owner.name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get owner(): Owner {
+    return this._owner;
   }
 
   public asJson(): Promise<JSON> {

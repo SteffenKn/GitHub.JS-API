@@ -3,37 +3,19 @@ import {Repo} from './Repo';
 
 export class Orga {
   private _httpClient: HttpClient;
-  private _orgaName: string;
+  private _name: string;
 
-  constructor(httpClient: HttpClient, orgaName: string) {
+  constructor(httpClient: HttpClient, name: string) {
     this._httpClient = httpClient;
-    this._orgaName = orgaName;
+    this._name = name;
   }
 
   public getRepo(repoName: string): Repo {
-    return new Repo(this._httpClient, this._orgaName, repoName);
-  }
-
-  public async getAllRepos(): Promise<Array<Repo>> {
-    const url: string = `/orgas/${this._orgaName}/repos`;
-
-    const response: JSON = await this._httpClient.get(url);
-
-    const repos: Array<Repo> = [];
-
-    for (const responseIndex in response) {
-      const repoData: JSON = response[responseIndex];
-
-      const repo: Repo = Repo.fromData(this._httpClient, repoData);
-
-      repos.push(repo);
-    }
-
-    return repos;
+    return new Repo(this._httpClient, this._name, repoName);
   }
 
   public asJson(): Promise<JSON> {
-    const url: string = `/orgs/${this._orgaName}`;
+    const url: string = `/orgs/${this._name}`;
 
     return this._httpClient.get(url);
   }
