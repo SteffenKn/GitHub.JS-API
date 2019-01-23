@@ -1,9 +1,12 @@
 'use strict';
+const config = require('./config.json');
+const Github = require('../dist/Github.js');
+
 const chai = require('chai'); 
 const expect = chai.expect;
 
-const Github = require('../dist/Github.js');
 const github = new Github.GithubApi();
+github.authToken = config.authToken;
 
 describe ('Orga Tests', () => {
   let orga;
