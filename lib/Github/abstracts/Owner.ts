@@ -1,6 +1,8 @@
 import {HttpClient} from '../../HttpClient';
 import {Repo} from '../Repo';
 
+const maxResultAmount: number = 100;
+
 export abstract class Owner {
   protected _httpClient: HttpClient;
   protected _name: string;
@@ -12,18 +14,24 @@ export abstract class Owner {
 
   public async getAllPublicRepos(): Promise<Array<Repo>> {
     const baseUrl: string = this._getBaseUrl();
-    const url: string = `${baseUrl}/repos`;
 
-    const response: JSON = await this._httpClient.get(url);
+    const ownerData: JSON = await this.asJson();
+    const publicRepoAmount: number = ownerData['public_repos'];
+    const requestAmount: number = Math.ceil(publicRepoAmount / maxResultAmount);
 
     const repos: Array<Repo> = [];
 
-    for (const responseIndex in response) {
-      const repoData: JSON = response[responseIndex];
+    for (let index: number = 1; index <= requestAmount; index++) {
+      const url: string = `${baseUrl}/repos?per_page=100&page=${index}`;
+      const response: JSON = await this._httpClient.get(url);
 
-      const repo: Repo = Repo.fromData(this._httpClient, this, repoData);
+      for (const responseIndex in response) {
+        const repoData: JSON = response[responseIndex];
 
-      repos.push(repo);
+        const repo: Repo = Repo.fromData(this._httpClient, this, repoData);
+
+        repos.push(repo);
+      }
     }
 
     return repos;
