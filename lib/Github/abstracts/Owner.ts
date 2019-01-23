@@ -11,7 +11,8 @@ export abstract class Owner {
   }
 
   public async getAllRepos(): Promise<Array<Repo>> {
-    const url: string = this._getUrl();
+    const baseUrl: string = this._getBaseUrl();
+    const url: string = `${baseUrl}/repo`;
 
     const response: JSON = await this._httpClient.get(url);
 
@@ -28,7 +29,7 @@ export abstract class Owner {
     return repos;
   }
 
-  protected abstract _getUrl(): string;
+  protected abstract _getBaseUrl(): string;
 
   public get name(): string {
     return this._name;

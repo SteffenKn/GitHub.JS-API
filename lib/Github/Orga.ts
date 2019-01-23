@@ -13,12 +13,12 @@ export class Orga extends Owner {
     return new Repo(this._httpClient, this, repoName);
   }
 
-  public _getUrl(): string {
-    return `/orgs/${this._name}/repos`;
+  public _getBaseUrl(): string {
+    return `/orgs/${this._name}`;
   }
 
   public asJson(): Promise<JSON> {
-    const url: string = `/orgs/${this._name}`;
+    const url: string = this._getBaseUrl();
 
     return this._httpClient.get(url);
   }
