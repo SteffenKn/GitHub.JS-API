@@ -81,7 +81,9 @@ pipeline {
       steps {
         sh('node --version')
 
-        sh('npm test')
+        withCredentials([string(credentialsId: 'Jenkins Commit Status', variable: 'AUTHTOKEN')]) {
+          sh('npm test --authToken='+AUTHTOKEN)
+        }
       }
     }
 
