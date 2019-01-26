@@ -19,7 +19,7 @@ export class Repo {
     return new Repo(httpClient, owner, repoName);
   }
 
-  public async getAllPullRequests(): Promise<Array<PullRequest>> {
+  public async getAllOpenPullRequests(): Promise<Array<PullRequest>> {
     const pullRequests: Array<PullRequest> = [];
 
     let prsFound: boolean = true;
