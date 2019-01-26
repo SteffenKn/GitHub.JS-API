@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint --project .",
+    "test-jenkins": "JUNIT_REPORT_PATH=report.xml npm test -- --reporter mocha-jenkins-reporter ",
     "test": "mocha tests/*.js --timeout 15000 --exit "
   },
   "keywords": [
@@ -21,6 +22,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "mocha-jenkins-reporter": "^0.4.1",
     "optimist": "^0.6.1",
     "tslint": "^5.12.1",
     "tslint-config-5minds": "^1.0.6",
