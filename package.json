@@ -20,6 +20,7 @@
     "node-fetch": "2.3.0"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.1.4",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "mocha-jenkins-reporter": "^0.4.1",
