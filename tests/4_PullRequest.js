@@ -1,11 +1,11 @@
 'use strict';
-const Github = require('../dist/Github.js');
+const GitHub = require('../dist/GitHub.js');
 
 const argv = require('optimist').argv;
 const chai = require('chai'); 
 const expect = chai.expect;
 
-const github = new Github.GithubApi();
+const github = new GitHub.GitHubApi();
 
 const authTokenSet = argv.authToken !== undefined;
 if (authTokenSet) {
@@ -23,7 +23,7 @@ describe ('Pull Request Tests', () => {
   });
 
   it ('Should Be Able to Get all Pull Request', async () => {
-    const prs = await github.getUser("octocat").getRepo("Hello-World").getAllPullRequests();
+    const prs = await github.getUser("octocat").getRepo("Hello-World").getOpenPullRequests();
 
     expect(prs.length).to.be.greaterThan(160);
   });
