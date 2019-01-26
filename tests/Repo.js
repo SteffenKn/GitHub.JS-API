@@ -57,4 +57,30 @@ describe ('Repo Tests', () => {
         }
       });
   });
+
+  it ('Should get a private repo with the correct authtoken', async () => {
+    const repoData = await github.getUser('SteffenKn').getRepo('Test-Repo').asJson();
+    const repoName = repoData['name'];
+
+    expect(repoName).to.equal('Test-Repo');
+  });
+
+  it ('Should not get a private repo with an invalid authtoken', (done) => {
+    github.authToken = 'asd';
+
+    github.getUser('SteffenKn').getRepo('Test-Repo').asJson()
+    .then(() => {
+      done('Did not throw an error');
+    })
+    .catch((error) => {
+      const expectedErrorMessage = 'Bad credentials';
+
+      const isCorrectError = error.message === expectedErrorMessage;
+      if(isCorrectError){
+        done();
+      } else {
+        done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+      }
+    });
+  });
 });
