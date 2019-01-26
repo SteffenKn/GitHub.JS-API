@@ -1,19 +1,11 @@
 export class ConfigService {
-  private _config: Map<string, any> = new Map<string, any>();
+  private static _config: Map<string, any> = new Map<string, any>();
 
-  public set(settingName: string, setting: string): void {
+  public static set(settingName: string, setting: string): void {
     this._config.set(settingName, setting);
   }
 
-  public get(settingName: string): any {
+  public static get(settingName: string): any {
     return this._config.get(settingName);
-  }
-
-  public persistData(): void {
-    throw new Error('Not implemented!');
-  }
-
-  public loadData(): void {
-    throw new Error('Not implemented!');
   }
 }

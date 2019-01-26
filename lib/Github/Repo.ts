@@ -1,22 +1,18 @@
 import {HttpClient, Owner, PullRequest} from '../index';
 
 export class Repo {
-  private _httpClient: HttpClient;
-
   private _owner: Owner;
   private _name: string;
 
-  constructor(httpClient: HttpClient, owner: Owner, name: string) {
-    this._httpClient = httpClient;
-
+  constructor(owner: Owner, name: string) {
     this._owner = owner;
     this._name = name;
   }
 
-  public static fromData(httpClient: HttpClient, owner: Owner, data: JSON): Repo {
+  public static fromData(owner: Owner, data: JSON): Repo {
     const repoName: string = data['name'];
 
-    return new Repo(httpClient, owner, repoName);
+    return new Repo(owner, repoName);
   }
 
   public async getAllOpenPullRequests(): Promise<Array<PullRequest>> {
@@ -27,12 +23,12 @@ export class Repo {
 
     while (pullRequestsFound) {
       const url: string = `/repos/${this._owner.name}/${this.name}/pulls?per_page=100&page=${pageIndex}`;
-      const response: JSON = await this._httpClient.get(url);
+      const response: JSON = await HttpClient.get(url);
 
       for (const responseIndex in response) {
         const pullRequestData: JSON = response[responseIndex];
 
-        const pullRequest: PullRequest = PullRequest.fromData(this._httpClient, this._owner, this, pullRequestData);
+        const pullRequest: PullRequest = PullRequest.fromData(this._owner, this, pullRequestData);
 
         pullRequests.push(pullRequest);
       }
@@ -45,13 +41,13 @@ export class Repo {
   }
 
   public getPullRequest(pullRequestNumber: number): PullRequest {
-    return new PullRequest(this._httpClient, this._owner, this, pullRequestNumber);
+    return new PullRequest(this._owner, this, pullRequestNumber);
   }
 
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._name}`;
 
-    return this._httpClient.get(url);
+    return HttpClient.get(url);
   }
 
   public get name(): string {
