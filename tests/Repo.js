@@ -13,7 +13,7 @@ if (authTokenSet) {
 }
 
 describe ('Repo Tests', () => {
-  it ('Should be able to get a specific repo', async () => {
+  it ('Should Be Able to Get a Specific Repo', async () => {
     const user = github.getUser("SteffenKn");
     const repo = user.getRepo("Cloudflare-DDNS-Sync");
 
@@ -23,7 +23,7 @@ describe ('Repo Tests', () => {
     expect(repoName).to.equal('cloudflare-ddns-sync');
   });
 
-  it ('Should be able to get all repos', async () => {
+  it ('Should Be Able to Get All Repos', async () => {
     const user = github.getUser("octocat");
 
     const repos = await user.getAllPublicRepos();
@@ -41,7 +41,7 @@ describe ('Repo Tests', () => {
     expect(repoNames).to.contain('Hello-World');
   });
 
-  it ('Should throw an error when trying to get a repo that does not exist', (done) => {
+  it ('Should Throw an Error When Trying to Get a Repo That Does Not Exist', (done) => {
     github.getUser('SteffenKn').getRepo('Not-Existing-Repo').asJson()
       .then(() => {
         done('Did not throw an error');
@@ -58,14 +58,14 @@ describe ('Repo Tests', () => {
       });
   });
 
-  it ('Should get a private repo with the correct authtoken', async () => {
+  it ('Should Get a Private Repo with the Correct Authtoken', async () => {
     const repoData = await github.getUser('SteffenKn').getRepo('Test-Repo').asJson();
     const repoName = repoData['name'];
 
     expect(repoName).to.equal('Test-Repo');
   });
 
-  it ('Should not get a private repo with an invalid authtoken', (done) => {
+  it ('Should Not Get a Private Repo with an Invalid Authtoken', (done) => {
     github.authToken = 'invalid-test-token';
 
     github.getUser('SteffenKn').getRepo('Test-Repo').asJson()
