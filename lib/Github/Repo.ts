@@ -41,9 +41,9 @@ export class Repo {
   public async asJson(): Promise<JSON> {
     const data: JSON = await this._getData();
 
-    const hasMessage: boolean = data['message'] !== undefined;
+    const errorGettingData: boolean = data['message'] !== undefined;
 
-    if (hasMessage) {
+    if (errorGettingData) {
       throw new Error(data['message']);
     }
 
