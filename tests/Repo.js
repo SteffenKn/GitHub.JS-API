@@ -14,13 +14,13 @@ if (authTokenSet) {
 
 describe ('Repo Tests', () => {
   it ('Should be able to get a specific repo', async () => {
-    const user = github.getUser("octocat");
-    const repo = user.getRepo("Hello-World");
+    const user = github.getUser("SteffenKn");
+    const repo = user.getRepo("Cloudflare-DDNS-Sync");
 
     const repoData = await repo.asJson();
     const repoName = repoData['name'];
 
-    expect(repoName).to.equal('Hello-World');
+    expect(repoName).to.equal('cloudflare-ddns-sync');
   });
 
   it ('Should be able to get all repos', async () => {

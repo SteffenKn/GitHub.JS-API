@@ -14,11 +14,11 @@ if (authTokenSet) {
 
 describe ('User Tests', () => {
   it ('Should be able to create an user', async () => {
-    const user = github.getUser("octocat");
+    const user = github.getUser("SteffenKn");
 
     const userData = await user.asJson();
     const userName = userData['name'];
 
-    expect(userName).to.equal('The Octocat');
+    expect(userName).to.equal('Steffen Knaup');
   });
 });
