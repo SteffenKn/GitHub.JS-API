@@ -6,30 +6,18 @@ export class Repo {
 
   private _owner: Owner;
   private _name: string;
-  private _data: Promise<JSON>;
 
-  constructor(httpClient: HttpClient, owner: Owner, name: string, data?: JSON) {
+  constructor(httpClient: HttpClient, owner: Owner, name: string) {
     this._httpClient = httpClient;
 
     this._owner = owner;
     this._name = name;
-
-    const noData: boolean = data === undefined;
-    if (noData) {
-      this._data = this.getData();
-    } else {
-      this._data = new Promise((resolve: Function): void => {
-        resolve(data);
-
-        return;
-      });
-    }
   }
 
   public static fromData(httpClient: HttpClient, owner: Owner, data: JSON): Repo {
     const repoName: string = data['name'];
 
-    return new Repo(httpClient, owner, repoName, data);
+    return new Repo(httpClient, owner, repoName);
   }
 
   public getData(): Promise<JSON> {
@@ -51,7 +39,7 @@ export class Repo {
   }
 
   public async asJson(): Promise<JSON> {
-    const data: JSON = await this._data;
+    const data: JSON = await this.getData();
 
     const hasMessage: boolean = data['message'] !== undefined;
 
@@ -59,6 +47,6 @@ export class Repo {
       throw new Error(data['message']);
     }
 
-    return this._data;
+    return this.getData();
   }
 }
