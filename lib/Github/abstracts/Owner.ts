@@ -47,9 +47,15 @@ export abstract class Owner {
     return this._name;
   }
 
-  public asJson(): Promise<JSON> {
+  private _getData(): Promise<JSON> {
     const url: string = this._getBaseUrl();
 
     return this._httpClient.get(url);
+  }
+
+  public async asJson(): Promise<JSON> {
+    const data: JSON = await this._getData();
+
+    return data;
   }
 }
