@@ -1,1 +1,1 @@
-# GitHub.API-JS
+# GitHub.JS-API
