@@ -66,7 +66,7 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should not get a private repo with an invalid authtoken', (done) => {
-    github.authToken = 'asd';
+    github.authToken = 'invalid-test-token';
 
     github.getUser('SteffenKn').getRepo('Test-Repo').asJson()
     .then(() => {
