@@ -27,4 +27,28 @@ describe ('Orga Tests', () => {
 
     expect(orgaName).to.equal('GitHub');
   });
+
+  it ('Should not be able to get data from an invalid orga', (done) => {
+    github.getOrga("Not-Existing-Orga").asJson()
+    .then(() => {
+      done('Did not throw an error');
+    })
+    .catch((error) => {
+      const expectedErrorMessage = 'Not Found';
+
+      const isCorrectError = error.message === expectedErrorMessage;
+      if(isCorrectError){
+        done();
+      } else {
+        done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+      }
+    });
+  });
+
+  it ('Should be able to create a repo', () => {
+    const orga = github.getOrga("GitHub");
+    const repo = orga.getRepo('VisualStudio');
+
+    expect(repo.name).to.equal('VisualStudio');
+  });
 });
