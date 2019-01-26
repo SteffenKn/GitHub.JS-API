@@ -22,10 +22,10 @@ export class Repo {
   public async getAllOpenPullRequests(): Promise<Array<PullRequest>> {
     const pullRequests: Array<PullRequest> = [];
 
-    let prsFound: boolean = true;
+    let pullRequestsFound: boolean = true;
     let pageIndex: number = 1;
 
-    while (prsFound) {
+    while (pullRequestsFound) {
       const url: string = `/repos/${this._owner.name}/${this.name}/pulls?per_page=100&page=${pageIndex}`;
       const response: JSON = await this._httpClient.get(url);
 
@@ -37,7 +37,7 @@ export class Repo {
         pullRequests.push(pullRequest);
       }
 
-      prsFound = Object.keys(response).length > 0;
+      pullRequestsFound = Object.keys(response).length > 0;
       pageIndex++;
     }
 
