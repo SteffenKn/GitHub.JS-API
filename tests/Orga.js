@@ -30,19 +30,19 @@ describe ('Orga Tests', () => {
 
   it ('Should Not Be Able to Get Data from an Invalid Orga', (done) => {
     github.getOrga("Not-Existing-Orga").asJson()
-    .then(() => {
-      done('Did not throw an error');
-    })
-    .catch((error) => {
-      const expectedErrorMessage = 'Not Found';
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Not Found';
 
-      const isCorrectError = error.message === expectedErrorMessage;
-      if(isCorrectError){
-        done();
-      } else {
-        done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
-      }
-    });
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
   });
 
   it ('Should Be Able to Create a Repo', () => {

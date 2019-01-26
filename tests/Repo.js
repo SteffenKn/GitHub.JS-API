@@ -69,18 +69,18 @@ describe ('Repo Tests', () => {
     github.authToken = 'invalid-test-token';
 
     github.getUser('SteffenKn').getRepo('Test-Repo').asJson()
-    .then(() => {
-      done('Did not throw an error');
-    })
-    .catch((error) => {
-      const expectedErrorMessage = 'Bad credentials';
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Bad credentials';
 
-      const isCorrectError = error.message === expectedErrorMessage;
-      if(isCorrectError){
-        done();
-      } else {
-        done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
-      }
-    });
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
   });
 });
