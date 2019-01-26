@@ -1,6 +1,4 @@
-import {HttpClient} from '../HttpClient';
-
-import {Owner} from './abstracts/Owner';
+import {HttpClient, Owner} from '../index';
 
 export class User extends Owner {
 

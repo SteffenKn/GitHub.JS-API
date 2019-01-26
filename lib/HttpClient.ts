@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import {ConfigService} from './ConfigService';
+import {ConfigService} from './index';
 
 interface Header {
    [name: string]: string;
