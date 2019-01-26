@@ -20,7 +20,7 @@ export class Repo {
     return new Repo(httpClient, owner, repoName);
   }
 
-  public getData(): Promise<JSON> {
+  private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._name}`;
 
     return this._httpClient.get(url);
@@ -39,7 +39,7 @@ export class Repo {
   }
 
   public async asJson(): Promise<JSON> {
-    const data: JSON = await this.getData();
+    const data: JSON = await this._getData();
 
     const hasMessage: boolean = data['message'] !== undefined;
 
@@ -47,6 +47,6 @@ export class Repo {
       throw new Error(data['message']);
     }
 
-    return this.getData();
+    return this._getData();
   }
 }
