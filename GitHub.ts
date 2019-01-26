@@ -5,7 +5,7 @@ import {
   User,
 } from './lib/index';
 
-export class GithubApi {
+export class GitHubApi {
   private _configService: ConfigService;
   private _httpClient: HttpClient;
 
