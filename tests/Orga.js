@@ -16,6 +16,12 @@ describe ('Orga Tests', () => {
   it ('Should be able to create an orga', async () => {
     const orga = github.getOrga("GitHub");
 
+    expect(orga.name).to.equal('GitHub');
+  });
+
+  it ('Should be able to get data from an orga', async () => {
+    const orga = github.getOrga("GitHub");
+
     const orgaData = await orga.asJson();
     const orgaName = orgaData['name'];
 
