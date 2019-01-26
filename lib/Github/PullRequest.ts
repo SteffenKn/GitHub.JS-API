@@ -10,6 +10,11 @@ export class PullRequest {
   constructor(httpClient: HttpClient, owner: Owner, repo: Repo, pullRequestNumber: number) {
     this._httpClient = httpClient;
 
+    const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
+    if (pullRequestNumberIsNoNumber) {
+      throw new Error('PullRequestNumber must be a number');
+    }
+
     this._owner = owner;
     this._repo = repo;
     this._number = pullRequestNumber;
