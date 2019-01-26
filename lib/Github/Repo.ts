@@ -15,7 +15,7 @@ export class Repo {
     return new Repo(owner, repoName);
   }
 
-  public async getAllOpenPullRequests(): Promise<Array<PullRequest>> {
+  public async getOpenPullRequests(): Promise<Array<PullRequest>> {
     const pullRequests: Array<PullRequest> = [];
 
     let pullRequestsFound: boolean = true;
