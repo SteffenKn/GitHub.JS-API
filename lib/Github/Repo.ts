@@ -1,5 +1,4 @@
-import {HttpClient, Owner} from '../index';
-import { PullRequest } from './PullRequest';
+import {HttpClient, Owner, PullRequest} from '../index';
 
 export class Repo {
   private _httpClient: HttpClient;
