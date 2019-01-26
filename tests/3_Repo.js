@@ -8,12 +8,9 @@ const expect = chai.expect;
 
 const github = new GitHub.GitHubApi();
 
-const authTokenSet = argv.authToken !== undefined;
-if (authTokenSet) {
-  github.authToken = argv.authToken;
-}
-
 describe ('Repo Tests', () => {
+  setAuthToken();
+
   it ('Should Be Able to Get a Specific Repo', async () => {
     const user = github.getUser("SteffenKn");
     const repo = user.getRepo("Cloudflare-DDNS-Sync");
@@ -60,13 +57,6 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should Get a Private Repo with the Correct Authtoken', async () => {
-    const authToken = config.AUTH_TOKEN;
-
-    const authTokenIsSetInConfig = authToken !== '';
-    if(authTokenIsSetInConfig) {
-      github.authToken = authToken;
-    }
-
     const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
     const repoName = repoData['name'];
 
@@ -90,6 +80,8 @@ describe ('Repo Tests', () => {
           done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
         }
       });
+
+    setAuthToken();
   });
 
   it ('Should Be Able to Create a Pull Request', () => {
@@ -98,3 +90,17 @@ describe ('Repo Tests', () => {
     expect(pullRequest.number).to.equal(1);
   });
 });
+
+function setAuthToken() {
+  const authTokenInParameter = argv.authToken;
+  const authTokenInConfig = config.AUTH_TOKEN;
+
+  const authTokenIsSetInParameter = authTokenInParameter !== undefined;
+  const authTokenIsSetInConfig = authTokenInConfig !== '';
+
+  if (authTokenIsSetInParameter) {
+    github.authToken = authTokenInParameter;
+  } else if (authTokenIsSetInConfig) {
+    github.authToken = authTokenInConfig;
+  }
+}

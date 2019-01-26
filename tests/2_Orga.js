@@ -1,5 +1,6 @@
 'use strict';
 const GitHub = require('../dist/GitHub.js');
+const config = require('./config.json');
 
 const argv = require('optimist').argv;
 const chai = require('chai'); 
@@ -7,12 +8,9 @@ const expect = chai.expect;
 
 const github = new GitHub.GitHubApi();
 
-const authTokenSet = argv.authToken !== undefined;
-if (authTokenSet) {
-  github.authToken = argv.authToken;
-}
-
 describe ('Orga Tests', () => {
+  setAuthToken();
+
   it ('Should Be Able to Create an Orga', async () => {
     const orga = github.getOrga("GitHub");
 
@@ -52,3 +50,17 @@ describe ('Orga Tests', () => {
     expect(repo.name).to.equal('VisualStudio');
   });
 });
+
+function setAuthToken() {
+  const authTokenInParameter = argv.authToken;
+  const authTokenInConfig = config.AUTH_TOKEN;
+
+  const authTokenIsSetInParameter = authTokenInParameter !== undefined;
+  const authTokenIsSetInConfig = authTokenInConfig !== '';
+
+  if (authTokenIsSetInParameter) {
+    github.authToken = authTokenInParameter;
+  } else if (authTokenIsSetInConfig) {
+    github.authToken = authTokenInConfig;
+  }
+}
