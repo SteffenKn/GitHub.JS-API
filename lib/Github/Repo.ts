@@ -19,6 +19,35 @@ export class Repo {
     return new Repo(httpClient, owner, repoName);
   }
 
+  public async getAllPullRequests(): Promise<Array<PullRequest>> {
+    const pullRequests: Array<PullRequest> = [];
+
+    let prsFound: boolean = true;
+    let pageIndex: number = 1;
+
+    while (prsFound) {
+      const url: string = `/repos/${this._owner.name}/${this.name}/pulls?per_page=100&page=${pageIndex}`;
+      const response: JSON = await this._httpClient.get(url);
+
+      for (const responseIndex in response) {
+        const pullRequestData: JSON = response[responseIndex];
+
+        const pullRequest: PullRequest = PullRequest.fromData(this._httpClient, this._owner, this, pullRequestData);
+
+        pullRequests.push(pullRequest);
+      }
+
+      prsFound = Object.keys(response).length > 0;
+      pageIndex++;
+    }
+
+    return pullRequests;
+  }
+
+  public getPullRequest(pullRequestNumber: number): PullRequest {
+    return new PullRequest(this._httpClient, this._owner, this, pullRequestNumber);
+  }
+
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._name}`;
 
