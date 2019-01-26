@@ -13,7 +13,7 @@ if (authTokenSet) {
 }
 
 describe ('User Tests', () => {
-  it ('Should be able to create an user', async () => {
+  it ('Should Be Able to Create an User', async () => {
     const user = github.getUser("SteffenKn");
 
     const userData = await user.asJson();
@@ -22,7 +22,7 @@ describe ('User Tests', () => {
     expect(userName).to.equal('Steffen Knaup');
   });
 
-  it ('Should be able to get data from an user', async () => {
+  it ('Should Be Able to Get Data from an User', async () => {
     const user = github.getUser("SteffenKn");
 
     const userData = await user.asJson();
@@ -31,7 +31,7 @@ describe ('User Tests', () => {
     expect(userName).to.equal('Steffen Knaup');
   });
 
-  it ('Should not be able to get data from an invalid user', (done) => {
+  it ('Should Not Be Able to Get Data from an Invalid User', (done) => {
     github.getUser("Not-Existing-User").asJson()
     .then(() => {
       done('Did not throw an error');
@@ -48,7 +48,7 @@ describe ('User Tests', () => {
     });
   });
 
-  it ('Should be able to create a repo', () => {
+  it ('Should Be Able to Create a Repo', () => {
     const user = github.getUser("SteffenKn");
     const repo = user.getRepo('Cloudflare-DDNS-Sync');
 

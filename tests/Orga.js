@@ -13,13 +13,13 @@ if (authTokenSet) {
 }
 
 describe ('Orga Tests', () => {
-  it ('Should be able to create an orga', async () => {
+  it ('Should Be Able to Create an Orga', async () => {
     const orga = github.getOrga("GitHub");
 
     expect(orga.name).to.equal('GitHub');
   });
 
-  it ('Should be able to get data from an orga', async () => {
+  it ('Should Be Able to Get Data from an Orga', async () => {
     const orga = github.getOrga("GitHub");
 
     const orgaData = await orga.asJson();
@@ -28,7 +28,7 @@ describe ('Orga Tests', () => {
     expect(orgaName).to.equal('GitHub');
   });
 
-  it ('Should not be able to get data from an invalid orga', (done) => {
+  it ('Should Not Be Able to Get Data from an Invalid Orga', (done) => {
     github.getOrga("Not-Existing-Orga").asJson()
     .then(() => {
       done('Did not throw an error');
@@ -45,7 +45,7 @@ describe ('Orga Tests', () => {
     });
   });
 
-  it ('Should be able to create a repo', () => {
+  it ('Should Be Able to Create a Repo', () => {
     const orga = github.getOrga("GitHub");
     const repo = orga.getRepo('VisualStudio');
 
