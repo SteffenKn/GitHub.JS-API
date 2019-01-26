@@ -1,7 +1,9 @@
-import {ConfigService} from './lib/ConfigService';
-import {Orga} from './lib/Github/Orga';
-import {User} from './lib/Github/User';
-import {HttpClient} from './lib/HttpClient';
+import {
+  ConfigService,
+  HttpClient,
+  Orga,
+  User,
+} from './lib/index';
 
 export class GithubApi {
   private _configService: ConfigService;
