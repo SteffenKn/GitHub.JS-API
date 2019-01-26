@@ -1,5 +1,6 @@
 'use strict';
 const Github = require('../dist/Github.js');
+const config = require('./config.json');
 
 const argv = require('optimist').argv;
 const chai = require('chai'); 
@@ -59,7 +60,14 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should Get a Private Repo with the Correct Authtoken', async () => {
-    const repoData = await github.getUser('SteffenKn').getRepo('Test-Repo').asJson();
+    const authToken = config.AUTH_TOKEN;
+
+    const authTokenIsSetInConfig = authToken !== '';
+    if(authTokenIsSetInConfig) {
+      github.authToken = authToken;
+    }
+
+    const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
     const repoName = repoData['name'];
 
     expect(repoName).to.equal('Test-Repo');
@@ -68,7 +76,7 @@ describe ('Repo Tests', () => {
   it ('Should Not Get a Private Repo with an Invalid Authtoken', (done) => {
     github.authToken = 'invalid-test-token';
 
-    github.getUser('SteffenKn').getRepo('Test-Repo').asJson()
+    github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
       .then(() => {
         done('Did not throw an error');
       })
