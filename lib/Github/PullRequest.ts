@@ -1,14 +1,11 @@
 import {HttpClient, Owner, Repo} from '../index';
 
 export class PullRequest {
-  private _httpClient: HttpClient;
-
   private _owner: Owner;
   private _repo: Repo;
   private _number: number;
 
-  constructor(httpClient: HttpClient, owner: Owner, repo: Repo, pullRequestNumber: number) {
-    this._httpClient = httpClient;
+  constructor(owner: Owner, repo: Repo, pullRequestNumber: number) {
 
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
@@ -20,16 +17,16 @@ export class PullRequest {
     this._number = pullRequestNumber;
   }
 
-  public static fromData(httpClient: HttpClient, owner: Owner, repo: Repo, data: JSON): PullRequest {
+  public static fromData(owner: Owner, repo: Repo, data: JSON): PullRequest {
     const pullRequestNumber: number = parseInt(data['number']);
 
-    return new PullRequest(httpClient, owner, repo, pullRequestNumber);
+    return new PullRequest(owner, repo, pullRequestNumber);
   }
 
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._repo.name}/pulls/${this._number}`;
 
-    return this._httpClient.get(url);
+    return HttpClient.get(url);
   }
 
   public get number(): number {

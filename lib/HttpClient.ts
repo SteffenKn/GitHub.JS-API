@@ -3,18 +3,12 @@ import fetch from 'node-fetch';
 import {ConfigService} from './index';
 
 interface Header {
-   [name: string]: string;
-  }
+  [name: string]: string;
+}
 
 export class HttpClient {
-  private _configService: ConfigService;
-
-  constructor(configService: ConfigService) {
-    this._configService = configService;
-  }
-
-  public async get(path: string): Promise<JSON> {
-    const url: string = this._configService.get('endpoint') + path;
+  public static async get(path: string): Promise<JSON> {
+    const url: string = ConfigService.get('endpoint') + path;
 
     const header: Header = this._createHeader();
 
@@ -31,14 +25,14 @@ export class HttpClient {
     });
   }
 
-  public get endpoint(): string {
-    return this._configService.get('endpoint');
+  public static get endpoint(): string {
+    return ConfigService.get('endpoint');
   }
 
-  private _createHeader(): Header {
+  private static _createHeader(): Header {
     const header: Header = {};
 
-    const authToken: string = this._configService.get('authToken');
+    const authToken: string = ConfigService.get('authToken');
 
     const authTokenSet: boolean = authToken !== null;
     if (authTokenSet) {

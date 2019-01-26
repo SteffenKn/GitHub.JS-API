@@ -4,11 +4,9 @@ import {Repo} from '../Repo';
 const maxResultAmount: number = 100;
 
 export abstract class Owner {
-  protected _httpClient: HttpClient;
   protected _name: string;
 
-  constructor(httpClient: HttpClient, name: string) {
-    this._httpClient = httpClient;
+  constructor(name: string) {
     this._name = name;
   }
 
@@ -23,12 +21,12 @@ export abstract class Owner {
 
     for (let index: number = 1; index <= requestAmount; index++) {
       const url: string = `${baseUrl}/repos?per_page=100&page=${index}`;
-      const response: JSON = await this._httpClient.get(url);
+      const response: JSON = await HttpClient.get(url);
 
       for (const responseIndex in response) {
         const repoData: JSON = response[responseIndex];
 
-        const repo: Repo = Repo.fromData(this._httpClient, this, repoData);
+        const repo: Repo = Repo.fromData(this, repoData);
 
         repos.push(repo);
       }
@@ -38,7 +36,7 @@ export abstract class Owner {
   }
 
   public getRepo(repoName: string): Repo {
-    return new Repo(this._httpClient, this, repoName);
+    return new Repo(this, repoName);
   }
 
   protected abstract _getBaseUrl(): string;
@@ -50,7 +48,7 @@ export abstract class Owner {
   private _getData(): Promise<JSON> {
     const url: string = this._getBaseUrl();
 
-    return this._httpClient.get(url);
+    return HttpClient.get(url);
   }
 
   public async asJson(): Promise<JSON> {

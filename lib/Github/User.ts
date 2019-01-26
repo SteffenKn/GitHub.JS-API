@@ -1,11 +1,9 @@
-import {HttpClient} from '../index';
-
 import {Owner} from './index';
 
 export class User extends Owner {
 
-  constructor(httpClient: HttpClient, name: string) {
-    super(httpClient, name);
+  constructor(name: string) {
+    super(name);
   }
 
   protected _getBaseUrl(): string {
