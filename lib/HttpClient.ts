@@ -20,7 +20,7 @@ export class HttpClient {
 
     return new Promise(async(resolve: Function, reject: Function): Promise<void> => {
       try {
-        const fetchResult: any = await fetch(url, { headers: header });
+        const fetchResult: Request = await fetch(url, { headers: header });
 
         const result: JSON = await fetchResult.json();
 
