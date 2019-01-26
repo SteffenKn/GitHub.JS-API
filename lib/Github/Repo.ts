@@ -50,7 +50,15 @@ export class Repo {
     return this._owner;
   }
 
-  public asJson(): Promise<JSON> {
+  public async asJson(): Promise<JSON> {
+    const data: JSON = await this._data;
+
+    const hasMessage: boolean = data['message'] !== undefined;
+
+    if (hasMessage) {
+      throw new Error(data['message']);
+    }
+
     return this._data;
   }
 }
