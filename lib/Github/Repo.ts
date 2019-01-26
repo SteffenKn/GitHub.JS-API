@@ -26,10 +26,6 @@ export class Repo {
     return this._httpClient.get(url);
   }
 
-  public get ownerName(): string {
-    return this._owner.name;
-  }
-
   public get name(): string {
     return this._name;
   }
