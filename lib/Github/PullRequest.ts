@@ -21,7 +21,7 @@ export class PullRequest {
   }
 
   public static fromData(httpClient: HttpClient, owner: Owner, repo: Repo, data: JSON): PullRequest {
-    const pullRequestNumber: number = data['number'];
+    const pullRequestNumber: number = parseInt(data['number']);
 
     return new PullRequest(httpClient, owner, repo, pullRequestNumber);
   }
