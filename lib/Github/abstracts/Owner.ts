@@ -56,6 +56,12 @@ export abstract class Owner {
   public async asJson(): Promise<JSON> {
     const data: JSON = await this._getData();
 
+    const errorGettingData: boolean = data['message'] !== undefined;
+
+    if (errorGettingData) {
+      throw new Error(data['message']);
+    }
+
     return data;
   }
 }
