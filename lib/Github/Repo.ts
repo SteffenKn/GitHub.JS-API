@@ -47,6 +47,6 @@ export class Repo {
       throw new Error(data['message']);
     }
 
-    return this._getData();
+    return data;
   }
 }
