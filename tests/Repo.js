@@ -40,4 +40,21 @@ describe ('Repo Tests', () => {
     expect(repoNames).to.contain('Spoon-Knife');
     expect(repoNames).to.contain('Hello-World');
   });
+
+  it ('Should throw an error when trying to get a repo that does not exist', (done) => {
+    github.getUser('SteffenKn').getRepo('Not-Existing-Repo').asJson()
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Not Found';
+
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
+  });
 });
