@@ -83,4 +83,10 @@ describe ('Repo Tests', () => {
         }
       });
   });
+
+  it ('Should Be Able to Create a Pull Request', () => {
+    const pullRequest = github.getOrga("GitHub").getRepo('VisualStudio').getPullRequest(1);
+
+    expect(pullRequest.number).to.equal(1);
+  });
 });
