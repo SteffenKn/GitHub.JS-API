@@ -82,7 +82,7 @@ pipeline {
         sh('node --version')
 
         withCredentials([string(credentialsId: 'Jenkins Commit Status', variable: 'AUTHTOKEN')]) {
-          sh('npm test --authToken='+AUTHTOKEN)
+          sh('npm test -- --authToken='+AUTHTOKEN)
         }
       }
     }
