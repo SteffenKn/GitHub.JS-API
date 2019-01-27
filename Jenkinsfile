@@ -13,6 +13,16 @@ def cleanup_workspace() {
   }
 }
 
+def setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/SteffenKn/GitHub.API-JS"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
 pipeline {
   agent any
   tools {
@@ -23,40 +33,76 @@ pipeline {
   }
 
   stages {
-    stage('prepare') {
+    stage('Prepare') {
       steps {
+        setBuildStatus('Building...', 'PENDING')
+
         script {
           raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true)
           package_version = raw_package_version.trim()
-          echo("Package version is '${package_version}'")
-
           branch = env.BRANCH_NAME;
+          branch_is_master = branch == 'master';
+
+          echo("Package version is '${package_version}'")
           echo("Branch is '${branch}'")
         }
+
         nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
           sh('node --version')
         }
       }
     }
-    stage('install') {
+
+    stage('Install') {
       steps {
         sh('node --version')
+
         sh('npm install')
       }
     }
-    // stage('lint') {
-    //   steps {
-    //     sh('node --version')
-    //     sh('npm run lint')
-    //   }
-    // }
-    // stage('build') {
-    //   steps {
-    //     sh('node --version')
-    //     sh('npm run build')
-    //   }
-    // }
-    stage('cleanup') {
+
+    stage('Lint') {
+      steps {
+        sh('node --version')
+
+        sh('npm run lint')
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh('node --version')
+
+        sh('npm run build')
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh('node --version')
+
+        withCredentials([string(credentialsId: 'Jenkins Commit Status', variable: 'AUTHTOKEN')]) {
+          sh('npm run test-jenkins -- --authToken='+AUTHTOKEN)
+
+          junit 'report.xml'
+        }
+      }
+    }
+
+    stage('Publish') {
+      when {
+        expression {
+          branch_is_master
+        }
+      }
+      steps {
+        sh('node --version')
+
+        sh('npm publish')
+      }
+    }
+
+    stage('Cleanup') {
       steps {
         script {
           // this stage just exists, so the cleanup-work that happens in the post-script
@@ -66,11 +112,20 @@ pipeline {
       }
     }
   }
+
   post {
     always {
       script {
         cleanup_workspace();
       }
+    }
+
+    success {
+      setBuildStatus('Build succeeded.', 'SUCCESS');
+    }
+
+    failure {
+      setBuildStatus('Build failed!', 'FAILURE');
     }
   }
 }
