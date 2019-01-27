@@ -98,7 +98,9 @@ pipeline {
       steps {
         sh('node --version')
 
-        sh('npm publish')
+        withNPM(npmrcConfig: 'Jenkins-Npmrc') {
+          sh('npm publish')
+        }
       }
     }
 
