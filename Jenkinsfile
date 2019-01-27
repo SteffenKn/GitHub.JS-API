@@ -41,6 +41,7 @@ pipeline {
           raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true)
           package_version = raw_package_version.trim()
           branch = env.BRANCH_NAME;
+          branch_is_master = branch == 'master';
 
           echo("Package version is '${package_version}'")
           echo("Branch is '${branch}'")
@@ -86,6 +87,19 @@ pipeline {
 
           junit 'report.xml'
         }
+      }
+    }
+
+    stage('Publish') {
+      when {
+        expression {
+          branch_is_master
+        }
+      }
+      steps {
+        sh('node --version')
+
+        sh('npm publish')
       }
     }
 
