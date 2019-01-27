@@ -14,6 +14,10 @@
     "API",
     "API Wrapper"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:SteffenKn/GitHub.JS-API.git"
+  },
   "author": "Steffen Knaup",
   "license": "ISC",
   "dependencies": {
