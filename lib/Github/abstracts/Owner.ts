@@ -39,16 +39,8 @@ export abstract class Owner {
     return new Repo(this, repoName);
   }
 
-  protected abstract _getBaseUrl(): string;
-
   public get name(): string {
     return this._name;
-  }
-
-  private _getData(): Promise<JSON> {
-    const url: string = this._getBaseUrl();
-
-    return HttpClient.get(url);
   }
 
   public async asJson(): Promise<JSON> {
@@ -61,5 +53,13 @@ export abstract class Owner {
     }
 
     return data;
+  }
+
+  protected abstract _getBaseUrl(): string;
+
+  private _getData(): Promise<JSON> {
+    const url: string = this._getBaseUrl();
+
+    return HttpClient.get(url);
   }
 }
