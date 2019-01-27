@@ -6,7 +6,6 @@ export class PullRequest {
   private _number: number;
 
   constructor(owner: Owner, repo: Repo, pullRequestNumber: number) {
-
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
       throw new Error('PullRequestNumber must be a number');
@@ -21,12 +20,6 @@ export class PullRequest {
     const pullRequestNumber: number = parseInt(data['number']);
 
     return new PullRequest(owner, repo, pullRequestNumber);
-  }
-
-  private _getData(): Promise<JSON> {
-    const url: string = `/repos/${this._owner.name}/${this._repo.name}/pulls/${this._number}`;
-
-    return HttpClient.get(url);
   }
 
   public get number(): number {
@@ -51,5 +44,11 @@ export class PullRequest {
     }
 
     return data;
+  }
+
+  private _getData(): Promise<JSON> {
+    const url: string = `/repos/${this._owner.name}/${this._repo.name}/pulls/${this._number}`;
+
+    return HttpClient.get(url);
   }
 }
