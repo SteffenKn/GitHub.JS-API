@@ -5,7 +5,7 @@ export class Orga extends Owner {
     super(name);
   }
 
-  public _getBaseUrl(): string {
+  protected _getBaseUrl(): string {
     return `/orgs/${this._name}`;
   }
 }
