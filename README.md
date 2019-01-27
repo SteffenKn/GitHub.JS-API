@@ -329,3 +329,16 @@ A GitHub Pull Request.
   - Returns
     - The created pull request
       - Type: PullRequest
+
+## Changelog
+
+### v0.1.0
+
+- ✨ **Add Basic Support for Users**
+- ✨ **Add Basic Support for Orgas**
+- ✨ **Add Basic Support for Repos**
+- ✨ **Add Basic Support for Pull Requests**
+- ✨ **Add ConfigService**
+- ✨ **Add HttpClient**
+- ✅ **Add Tests**
+- 🏷 **Add Types**
