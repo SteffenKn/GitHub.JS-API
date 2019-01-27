@@ -96,11 +96,13 @@ gitHubApi.printPullRequestData();
 
 - endpoint
   - The GitHub api endpoint
+  - Type: string
   - Get & Set
   - Default: `https://api.github.com/`
 
 - authToken
   - The [GitHub AuthToken](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
+  - Type: string
   - Get & Set
   - Default: Not set.
 
@@ -108,32 +110,222 @@ gitHubApi.printPullRequestData();
 
 - GitHubApi(authToken?: string)
   - Parameters
-    - authToken (optional): The [GitHub AuthToken](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
+    - authToken [optional]
+      - The [GitHub AuthToken](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
+      - Type: string
 
 #### Functions
 
 - getOrga(orgaName: string): Orga
   - Parameters
     - orgaName: The name of the organization
+      - Type: string
 
   - Returns
     - The created organization
+      - Type: Orga
 
 - getUser(userName: string): User
   - Parameters
     - userName: The name of the user
+      - Type: string
 
   - Returns
     - The created user
+      - Type: User
 
-### Orga
+### Owner [abstract]
 
-A GitHub Organization.
+#### Constructor
+
+- Owner(name: string)
+  - Parameters
+    - name
+      - The name of the owner
+      - Type: string
 
 #### Variables
 
 - name
-  - The name of the organization
+  - The name of the owner
+  - Type: string
   - Get
 
 #### Functions
+
+- asJson(): Promise<JSON>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the owner as JSON
+      - Type: JSON
+
+- getRepo(repoName: string): Repo
+  - Parameters
+    - repoName: The name of the repository
+      - Type: string
+
+  - Returns
+    - The created repository
+      - Type: Repo
+
+- getAllPublicRepos(): Promise<Array<Repo>>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing all created public repositories
+      - Type: Promise<Array<Repo>>
+
+### Orga [extends Owner]
+
+A GitHub Organization.
+
+#### Constructor
+
+- Orga(name: string)
+  - Parameters
+    - name
+      - The name of the orga
+      - Type: string
+
+### User [extends Owner]
+
+A GitHub User.
+
+#### Constructor
+
+- User(name: string)
+  - Parameters
+    - name
+      - The name of the user
+      - Type: string
+
+### Repo
+
+A GitHub Repository.
+
+#### Constructor
+
+- Repo(owner: Owner, name: string)
+  - Parameters
+    - owner
+      - The owner of the repository
+      - Type: owner
+    - name
+      - The name of the repository
+      - Type: string
+
+#### Variables
+
+- name
+  - The name of the repository
+  - Type: string
+  - Get
+
+- owner
+  - The owner of the repository
+  - Type: Owner
+  - Get
+
+#### Functions
+
+- asJson(): Promise<JSON>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the repository as JSON
+      - Type: JSON
+
+- [static] fromData(owner: Owner, data: JSON): Repo
+  - Parameters
+    - owner
+      - The owner of the repository
+        - Type: Owner
+    - data
+      - The data of the repository
+        - Type: JSON
+
+  - Returns
+    - The created repository
+      - Type: Repo
+
+- getPullRequest(pullRequestNumber: number): PullRequest
+  - Parameters
+    - pullRequestNumber: The number of the pull request
+      - Type: number
+
+  - Returns
+    - The created pull request
+      - Type: PullRequest
+
+- getOpenPullRequests(): Promise<Array<Repo>>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing all created public repositories
+      - Type: Promise<Array<Repo>>
+
+### Pull Request
+
+A GitHub Pull Request.
+
+#### Constructor
+
+- PullRequest(owner: Owner, repo: Repo, pullRequestNumber: number)
+  - Parameters
+    - owner
+      - The owner of the repository that contains the pull request
+      - Type: Owner
+    - repo
+      - The repository that contains the pull request
+      - Type: Repo
+    - pullRequestNumber
+      - The number of the pull request
+      - Type: number
+
+#### Variables
+
+- number
+  - The number of the pull request
+  - Type: number
+  - Get
+
+- repo
+  - The repository containing the pull request
+  - Type: Repo
+  - Get
+
+- owner
+  - The owner of the repository containing the pull request
+  - Type: Owner
+  - Get
+
+#### Functions
+
+- asJson(): Promise<JSON>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the repository as JSON
+      - Type: JSON
+
+- [static] fromData(owner: Owner, repo: Repo, data: JSON): Pull Request
+  - Parameters
+    - owner
+      - The owner of the repository containing the pull request
+      - Type: Owner
+    - repo
+      - The repository containing the pull request
+      - Type: Repo
+    - data
+      - The data of the pull request
+      - Type: JSON
+
+  - Returns
+    - The created pull request
+      - Type: PullRequest
