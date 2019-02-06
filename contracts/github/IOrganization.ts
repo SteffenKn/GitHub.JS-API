@@ -1,4 +1,4 @@
-import {IPlan} from './index';
+import {createPlanFromJson, IPlan} from './index';
 
 export interface IOrganization {
   login: string;
@@ -39,4 +39,49 @@ export interface IOrganization {
   members_can_create_repositories: boolean;
   two_factor_requirement_enabled: boolean;
   members_allowed_repository_creation_type: string;
+}
+
+export function createOrganizationFromJson(json: JSON): IOrganization {
+  const organization: IOrganization = {
+    login: json['login'],
+    id: json['id'],
+    node_id: json['node_id'],
+    url: json['url'],
+    repos_url: json['repos_url'],
+    events_url: json['events_url'],
+    hooks_url: json['hooks_url'],
+    issues_url: json['issues_url'],
+    members_url: json['members_url'],
+    public_members_url: json['public_members_url'],
+    avatar_url: json['avatar_url'],
+    description: json['description'],
+    name: json['name'],
+    company: json['company'],
+    blog: json['blog'],
+    location: json['location'],
+    email: json['email'],
+    is_verified: json['is_verified'] === 'true',
+    has_organization_projects: json['has_organization_projects'] === 'true',
+    has_repository_projects: json['has_repository_projects'] === 'true',
+    public_repos: parseInt(json['public_repos']),
+    public_gists: parseInt(json['public_gists']),
+    followers: parseInt(json['followers']),
+    following: parseInt(json['following']),
+    html_url: json['html_url'],
+    created_at: json['created_at'],
+    type: json['type'],
+    total_private_repos: parseInt(json['total_private_repos']),
+    owned_private_repos: parseInt(json['owner_private_repos']),
+    private_gists: parseInt(json['private_gists']),
+    disk_usage: parseInt(json['disk_usage']),
+    collaborators: parseInt(json['collaborators']),
+    billing_email: json['billing_email'],
+    plan: createPlanFromJson(json['plan']),
+    default_repository_settings: json['default_repository_settings'],
+    members_can_create_repositories: json['members_can_create_repositories'] === 'true',
+    two_factor_requirement_enabled: json['two_factor_requirement_enabled'] === 'true',
+    members_allowed_repository_creation_type: json['members_allowed_repository_creation_type'],
+  };
+
+  return organization;
 }
