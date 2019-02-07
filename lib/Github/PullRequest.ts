@@ -1,3 +1,5 @@
+import {IOwner, IPullRequest, IRepo} from '../../contracts/index';
+
 import {
   ConfigService,
   HttpClient,
@@ -10,11 +12,11 @@ export class PullRequest {
   private _configService: ConfigService;
   private _httpClient: HttpClient;
 
-  private _owner: Owner;
-  private _repo: Repo;
+  private _owner: IOwner;
+  private _repo: IRepo;
   private _number: number;
 
-  constructor(owner: Owner, repo: Repo, pullRequestNumber: number, configService?: ConfigService) {
+  constructor(owner: IOwner, repo: ORepo, pullRequestNumber: number, configService?: ConfigService) {
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
       throw new Error('PullRequestNumber must be a number');
@@ -33,21 +35,23 @@ export class PullRequest {
     this._httpClient = new HttpClient(this._configService);
   }
 
-  public static fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): PullRequest {
+  public static fromData(owner: IOwner, repo: IRepo, data: JSON, configService?: ConfigService): IPullRequest {
     const pullRequestNumber: number = parseInt(data['number']);
 
-    return new PullRequest(owner, repo, pullRequestNumber, configService);
+    const pullRequest: IPullRequest = new PullRequest(owner, repo, pullRequestNumber, configService);
+
+    return pullRequest;
   }
 
   public get number(): number {
     return this._number;
   }
 
-  public get owner(): Owner {
+  public get owner(): IOwner {
     return this._owner;
   }
 
-  public get repo(): Repo {
+  public get repo(): IRepo {
     return this._repo;
   }
 

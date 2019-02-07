@@ -1,3 +1,5 @@
+import {IOrga, IUser} from './contracts/index';
+
 import {
   ConfigService,
   Orga,
@@ -67,14 +69,14 @@ export class GitHubApi {
     return this;
   }
 
-  public getOrga(orgaName: string): Orga {
-    const orga: Orga = new Orga(orgaName, this._configService);
+  public getOrga(orgaName: string): IOrga {
+    const orga: IOrga = new Orga(orgaName, this._configService);
 
     return orga;
   }
 
-  public getUser(username: string): User {
-    const user: User = new User(username, this._configService);
+  public getUser(username: string): IUser {
+    const user: IUser = new User(username, this._configService);
 
     return user;
   }
