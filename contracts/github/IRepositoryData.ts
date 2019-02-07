@@ -1,17 +1,17 @@
 import {
-  ILicense,
-  IPermissions,
-  ISubOrganization,
-  ISubRepo,
-  ISubUser,
+  ILicenseData,
+  IPermissionsData,
+  ISubOrganizationData,
+  ISubRepositoryData,
+  ISubUserData,
 } from './index';
 
-export interface IRepo {
+export interface IRepositoryData {
   id: number;
   node_id: string;
   name: string;
   full_name: string;
-  owner: ISubUser;
+  owner: ISubUserData;
   private: boolean;
   html_url: string;
   description: string;
@@ -76,14 +76,14 @@ export interface IRepo {
   pushed_at: string;
   created_at: string;
   updated_at: string;
-  permissions: IPermissions;
+  permissions: IPermissionsData;
   allow_rebase_merge: boolean;
   allow_squash_merge: boolean;
   allow_merge_commit: boolean;
   subscribers_count: number;
   network_count: number;
-  license: ILicense;
-  organization: ISubOrganization;
-  parent: ISubRepo;
-  source: ISubRepo;
+  license: ILicenseData;
+  organization: ISubOrganizationData;
+  parent: ISubRepositoryData;
+  source: ISubRepositoryData;
 }

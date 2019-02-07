@@ -1,4 +1,4 @@
-export interface ILabel {
+export interface ILabelData {
   id: number;
   node_id: string;
   url: string;

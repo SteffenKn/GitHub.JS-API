@@ -1,4 +1,4 @@
-export interface IPermissions {
+export interface IPermissionsData {
   admin: boolean;
   push: boolean;
   pull: boolean;

@@ -1,9 +1,9 @@
 export * from './sub/index';
 
-export * from './ILabel';
-export * from './IMilestone';
-export * from './IOrganization';
-export * from './IPullRequest';
-export * from './IRepo';
-export * from './ITeam';
-export * from './IUser';
+export * from './ILabelData';
+export * from './IMilestoneData';
+export * from './IOrganizationData';
+export * from './IPullRequestData';
+export * from './IRepositoryData';
+export * from './ITeamData';
+export * from './IUserData';

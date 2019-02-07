@@ -1,6 +1,6 @@
-import {createPlanFromJson, IPlan} from './index';
+import {createPlanFromJson, IPlanData} from './index';
 
-export interface IOrganization {
+export interface IOrganizationData {
   login: string;
   id: number;
   node_id: string;
@@ -34,15 +34,15 @@ export interface IOrganization {
   disk_usage: number;
   collaborators: number;
   billing_email: string;
-  plan: IPlan;
+  plan: IPlanData;
   default_repository_settings: string;
   members_can_create_repositories: boolean;
   two_factor_requirement_enabled: boolean;
   members_allowed_repository_creation_type: string;
 }
 
-export function createOrganizationFromJson(json: JSON): IOrganization {
-  const organization: IOrganization = {
+export function createOrganizationFromJson(json: JSON): IOrganizationData {
+  const organization: IOrganizationData = {
     login: json['login'],
     id: json['id'],
     node_id: json['node_id'],

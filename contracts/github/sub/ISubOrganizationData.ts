@@ -1,4 +1,4 @@
-export interface ISubUser {
+export interface ISubOrganizationData {
   login: string;
   id: number;
   node_id: string;

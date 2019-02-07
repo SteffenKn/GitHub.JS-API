@@ -1,4 +1,4 @@
-export interface ILicense {
+export interface ILicenseData {
   key: string;
   name: string;
   spdx_id: string;

@@ -1,11 +1,11 @@
-import {IPermissions, ISubUser} from './index';
+import {IPermissionsData, ISubUserData} from './index';
 
-export interface ISubRepo {
+export interface ISubRepositoryData {
   id: number;
   node_id: string;
   name: string;
   full_name: string;
-  owner: ISubUser;
+  owner: ISubUserData;
   private: boolean;
   html_url: string;
   description: string;
@@ -70,7 +70,7 @@ export interface ISubRepo {
   pushed_at: string;
   created_at: string;
   updated_at: string;
-  permissions: IPermissions;
+  permissions: IPermissionsData;
   allow_rebase_merge: boolean;
   allow_squash_merge: boolean;
   allow_merge_commit: boolean;

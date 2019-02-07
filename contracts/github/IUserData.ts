@@ -1,6 +1,6 @@
-import {IPlan} from './index';
+import {IPlanData} from './index';
 
-export interface IUser {
+export interface IUserData {
   login: string;
   id: number;
   node_id: string;
@@ -38,5 +38,5 @@ export interface IUser {
   disk_usage: number;
   collaborators: number;
   two_factor_authentication: boolean;
-  plan: IPlan;
+  plan: IPlanData;
 }

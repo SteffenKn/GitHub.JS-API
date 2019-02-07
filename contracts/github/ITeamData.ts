@@ -1,4 +1,4 @@
-export interface ITeam {
+export interface ITeamData {
   id: number;
   node_id: string;
   url: string;

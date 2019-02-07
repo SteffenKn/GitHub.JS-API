@@ -1,11 +1,11 @@
 import {
-  IBase,
-  IHead,
-  ILabel,
-  ILinks,
-  IMilestone,
-  ISubUser,
-  ITeam,
+  IBaseData,
+  IHeadData,
+  ILabelData,
+  ILinksData,
+  IMilestoneData,
+  ISubUserData,
+  ITeamData,
 } from './index';
 
 export interface IPullRequest {
@@ -25,29 +25,29 @@ export interface IPullRequest {
   state: string;
   locked: boolean;
   title: string;
-  user: ISubUser;
+  user: ISubUserData;
   body: string;
-  labels: Array<ILabel>;
-  milestone: IMilestone;
+  labels: Array<ILabelData>;
+  milestone: IMilestoneData;
   active_lock_reason: string;
   created_at: string;
   updated_at: string;
   closed_at: string;
   merged_at: string;
   merge_commit_sha: string;
-  assignee: ISubUser;
-  assignees: Array<ISubUser>;
-  requested_reviewers: Array<ISubUser>;
-  requested_teams: Array<ITeam>;
-  head: IHead;
-  base: IBase;
-  _links: ILinks;
+  assignee: ISubUserData;
+  assignees: Array<ISubUserData>;
+  requested_reviewers: Array<ISubUserData>;
+  requested_teams: Array<ITeamData>;
+  head: IHeadData;
+  base: IBaseData;
+  _links: ILinksData;
   author_association: string;
   merged: boolean;
   mergeable: boolean;
   rebaseable: boolean;
   mergeable_state: string;
-  merged_by: ISubUser;
+  merged_by: ISubUserData;
   comments: number;
   review_comments: number;
   maintainer_can_modify: boolean;

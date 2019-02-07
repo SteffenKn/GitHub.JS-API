@@ -1,6 +1,6 @@
-import {ISubUser} from './index';
+import {ISubUserData} from './index';
 
-export interface IMilestone {
+export interface IMilestoneData {
   url: string;
   html_url: string;
   labels_url: string;
@@ -10,7 +10,7 @@ export interface IMilestone {
   state: string;
   title: string;
   description: string;
-  creator: ISubUser;
+  creator: ISubUserData;
   open_issues: number;
   closed_issues: number;
   created_at: string;
