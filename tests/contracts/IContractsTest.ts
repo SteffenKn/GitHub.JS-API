@@ -1,8 +1,8 @@
-import {IOrganization, IPullRequest, IRepo, IUser} from '../../contracts/github/index';
+import {IOrganizationData, IPullRequest, IRepositoryData, IUserData} from '../../contracts/github/index';
 
 export class TypeTest {
   constructor() {
-    const user: IUser = {
+    const user: IUserData = {
       login: 'octocat',
       id: 1,
       node_id: 'MDQ6VXNlcjE=',
@@ -49,7 +49,7 @@ export class TypeTest {
     };
 
     // ORGA
-    const orga: IOrganization = {
+    const orga: IOrganizationData = {
       login: 'github',
       id: 1,
       node_id: 'MDEyOk9yZ2FuaXphdGlvbjE=',
@@ -95,7 +95,7 @@ export class TypeTest {
     };
 
     // REPO
-    const repo: IRepo = {
+    const repo: IRepositoryData = {
       id: 1296269,
       node_id: 'MDEwOlJlcG9zaXRvcnkxMjk2MjY5',
       name: 'Hello-World',
