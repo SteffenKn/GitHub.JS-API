@@ -1,4 +1,4 @@
-import {IOrganizationData, IPullRequest, IRepositoryData, IUserData} from '../../contracts/github/index';
+import {IOrganizationData, IPullRequestData, IRepositoryData, IUserData} from '../../contracts/github/index';
 
 export class TypeTest {
   constructor() {
@@ -439,7 +439,7 @@ export class TypeTest {
     };
 
     // PULL REQUEST
-    const pr: IPullRequest = {
+    const pr: IPullRequestData = {
       url: 'https://api.github.com/repos/octocat/Hello-World/pulls/1347',
       id: 1,
       node_id: 'MDExOlB1bGxSZXF1ZXN0MQ==',

@@ -8,7 +8,7 @@ import {
   ITeamData,
 } from './index';
 
-export interface IPullRequest {
+export interface IPullRequestData {
   url: string;
   id: number;
   node_id: string;
