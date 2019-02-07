@@ -1,4 +1,4 @@
-import {createOrganizationFromJson, IOrganization} from '../../contracts/github';
+import {createOrganizationFromJson, IOrganizationData} from '../../contracts/index';
 
 import {ConfigService} from '../index';
 
@@ -14,10 +14,10 @@ export class Orga extends Owner {
     return `/orgs/${this._name}`;
   }
 
-  public async asOrganization(): Promise<IOrganization> {
+  public async asOrganization(): Promise<IOrganizationData> {
     const data: JSON = await super.asJson();
 
-    const orgaData: IOrganization = createOrganizationFromJson(data);
+    const orgaData: IOrganizationData = createOrganizationFromJson(data);
 
     return orgaData;
   }
