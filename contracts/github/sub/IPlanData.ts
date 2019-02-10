@@ -5,7 +5,7 @@ export interface IPlanData {
   collaborators?: number;
 }
 
-export function createPlanFromJson(json: JSON): IPlanData {
+export function createPlanDataFromJson(json: JSON): IPlanData {
   const plan: IPlanData = {
     name: json['name'],
     space: parseInt(json['space']),

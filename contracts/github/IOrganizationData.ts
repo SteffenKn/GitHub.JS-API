@@ -1,4 +1,4 @@
-import {createPlanFromJson, IPlanData} from './index';
+import {createPlanDataFromJson, IPlanData} from './index';
 
 export interface IOrganizationData {
   login: string;
@@ -41,7 +41,7 @@ export interface IOrganizationData {
   members_allowed_repository_creation_type: string;
 }
 
-export function createOrganizationFromJson(json: JSON): IOrganizationData {
+export function createOrganizationDataFromJson(json: JSON): IOrganizationData {
   const organization: IOrganizationData = {
     login: json['login'],
     id: json['id'],
@@ -76,7 +76,7 @@ export function createOrganizationFromJson(json: JSON): IOrganizationData {
     disk_usage: parseInt(json['disk_usage']),
     collaborators: parseInt(json['collaborators']),
     billing_email: json['billing_email'],
-    plan: createPlanFromJson(json['plan']),
+    plan: createPlanDataFromJson(json['plan']),
     default_repository_settings: json['default_repository_settings'],
     members_can_create_repositories: json['members_can_create_repositories'] === 'true',
     two_factor_requirement_enabled: json['two_factor_requirement_enabled'] === 'true',
