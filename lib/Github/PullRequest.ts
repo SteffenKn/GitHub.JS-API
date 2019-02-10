@@ -1,4 +1,9 @@
-import {IOwner, IPullRequest, IRepo} from '../../contracts/index';
+import {
+  IOwner,
+  IPullRequest,
+  IPullRequestData,
+  IRepo,
+} from '../../contracts/index';
 
 import {
   ConfigService,
