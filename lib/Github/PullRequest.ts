@@ -43,18 +43,6 @@ export class PullRequest {
     return pullRequest;
   }
 
-  public get number(): number {
-    return this._number;
-  }
-
-  public get owner(): IOwner {
-    return this._owner;
-  }
-
-  public get repo(): IRepo {
-    return this._repo;
-  }
-
   public async asJson(): Promise<JSON> {
     const data: JSON = await this._getData();
 
@@ -65,6 +53,18 @@ export class PullRequest {
     }
 
     return data;
+  }
+
+  public get number(): number {
+    return this._number;
+  }
+
+  public get owner(): IOwner {
+    return this._owner;
+  }
+
+  public get repo(): IRepo {
+    return this._repo;
   }
 
   private _getData(): Promise<JSON> {

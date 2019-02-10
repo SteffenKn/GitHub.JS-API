@@ -10,15 +10,15 @@ export class Orga extends Owner {
     super(name, configService);
   }
 
-  protected _getBaseUrl(): string {
-    return `/orgs/${this._name}`;
-  }
-
   public async asOrganization(): Promise<IOrganizationData> {
     const data: JSON = await super.asJson();
 
     const orgaData: IOrganizationData = createOrganizationFromJson(data);
 
     return orgaData;
+  }
+
+  protected _getBaseUrl(): string {
+    return `/orgs/${this._name}`;
   }
 }

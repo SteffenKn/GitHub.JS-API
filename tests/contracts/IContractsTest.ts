@@ -1,4 +1,9 @@
-import {IOrganizationData, IPullRequestData, IRepositoryData, IUserData} from '../../contracts/github/index';
+import {
+  IOrganizationData,
+  IPullRequestData,
+  IRepositoryData,
+  IUserData,
+} from '../../contracts/github/index';
 
 export class TypeTest {
   constructor() {

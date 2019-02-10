@@ -63,6 +63,18 @@ export class Repo {
     return new PullRequest(this._owner, this, pullRequestNumber, configService);
   }
 
+  public async asJson(): Promise<JSON> {
+    const data: JSON = await this._getData();
+
+    const errorGettingData: boolean = data['message'] !== undefined;
+
+    if (errorGettingData) {
+      throw new Error(data['message']);
+    }
+
+    return data;
+  }
+
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._name}`;
 
@@ -75,17 +87,5 @@ export class Repo {
 
   public get owner(): IOwner {
     return this._owner;
-  }
-
-  public async asJson(): Promise<JSON> {
-    const data: JSON = await this._getData();
-
-    const errorGettingData: boolean = data['message'] !== undefined;
-
-    if (errorGettingData) {
-      throw new Error(data['message']);
-    }
-
-    return data;
   }
 }
