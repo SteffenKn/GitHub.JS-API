@@ -381,6 +381,12 @@ A GitHub Pull Request.
 
 ## Changelog
 
+### v0.2.0
+
+- ✨ **Add Declarations**
+- ✨ **Add Registry**
+- ♻️ **Refactor ConfigService & HttpClient**
+
 ### v0.1.0
 
 - ✨ **Add Basic Support for Users**
