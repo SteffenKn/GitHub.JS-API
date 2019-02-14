@@ -48,6 +48,8 @@ in case the auth token was not already set in the `config.json`;
 
 ## Usage
 
+JavaScript:
+
 ```javascript
 const GitHubApi = require('github-js-api').GitHubApi;
 
@@ -65,6 +67,8 @@ async function printPullRequestData() {
 
 printPullRequestData();
 ```
+
+TypeScript:
 
 ```typescript
 import {GitHubApi} from 'github-js-api';
@@ -118,7 +122,8 @@ gitHubApi.printPullRequestData();
 
 - getOrga(orgaName: string): Orga
   - Parameters
-    - orgaName: The name of the organization
+    - orgaName
+      - The name of the organization
       - Type: string
 
   - Returns
@@ -127,7 +132,8 @@ gitHubApi.printPullRequestData();
 
 - getUser(userName: string): User
   - Parameters
-    - userName: The name of the user
+    - userName
+      - The name of the user
       - Type: string
 
   - Returns
@@ -163,7 +169,8 @@ gitHubApi.printPullRequestData();
 
 - getRepo(repoName: string): Repo
   - Parameters
-    - repoName: The name of the repository
+    - repoName
+      - The name of the repository
       - Type: string
 
   - Returns
