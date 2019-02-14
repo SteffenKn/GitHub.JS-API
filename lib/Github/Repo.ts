@@ -1,21 +1,38 @@
-import {HttpClient, Owner, PullRequest} from '../index';
+import {
+  ConfigService,
+  HttpClient,
+  Owner,
+  PullRequest,
+  Registry,
+} from '../index';
 
 export class Repo {
+  private _configService: ConfigService;
+  private _httpClient: HttpClient;
+
   private _owner: Owner;
   private _name: string;
 
-  constructor(owner: Owner, name: string) {
+  constructor(owner: Owner, name: string, configService?: ConfigService) {
     this._owner = owner;
     this._name = name;
+
+    const configServiceIsSet: boolean = configService !== undefined;
+
+    this._configService = configServiceIsSet
+                          ? configService
+                          : Registry.getElement('ConfigService');
+
+    this._httpClient = new HttpClient(this._configService);
   }
 
-  public static fromData(owner: Owner, data: JSON): Repo {
+  public static fromData(owner: Owner, data: JSON, configService?: ConfigService): Repo {
     const repoName: string = data['name'];
 
-    return new Repo(owner, repoName);
+    return new Repo(owner, repoName, configService);
   }
 
-  public async getOpenPullRequests(): Promise<Array<PullRequest>> {
+  public async getOpenPullRequests(configService?: ConfigService): Promise<Array<PullRequest>> {
     const pullRequests: Array<PullRequest> = [];
 
     let pullRequestsFound: boolean = true;
@@ -23,12 +40,12 @@ export class Repo {
 
     while (pullRequestsFound) {
       const url: string = `/repos/${this._owner.name}/${this.name}/pulls?per_page=100&page=${pageIndex}`;
-      const response: JSON = await HttpClient.get(url);
+      const response: JSON = await this._httpClient.get(url);
 
       for (const responseIndex in response) {
         const pullRequestData: JSON = response[responseIndex];
 
-        const pullRequest: PullRequest = PullRequest.fromData(this._owner, this, pullRequestData);
+        const pullRequest: PullRequest = PullRequest.fromData(this._owner, this, pullRequestData, configService);
 
         pullRequests.push(pullRequest);
       }
@@ -40,14 +57,14 @@ export class Repo {
     return pullRequests;
   }
 
-  public getPullRequest(pullRequestNumber: number): PullRequest {
-    return new PullRequest(this._owner, this, pullRequestNumber);
+  public getPullRequest(pullRequestNumber: number, configService?: ConfigService): PullRequest {
+    return new PullRequest(this._owner, this, pullRequestNumber, configService);
   }
 
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._name}`;
 
-    return HttpClient.get(url);
+    return this._httpClient.get(url);
   }
 
   public get name(): string {

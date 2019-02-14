@@ -1,11 +1,20 @@
-import {HttpClient, Owner, Repo} from '../index';
+import {
+  ConfigService,
+  HttpClient,
+  Owner,
+  Registry,
+  Repo,
+} from '../index';
 
 export class PullRequest {
+  private _configService: ConfigService;
+  private _httpClient: HttpClient;
+
   private _owner: Owner;
   private _repo: Repo;
   private _number: number;
 
-  constructor(owner: Owner, repo: Repo, pullRequestNumber: number) {
+  constructor(owner: Owner, repo: Repo, pullRequestNumber: number, configService?: ConfigService) {
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
       throw new Error('PullRequestNumber must be a number');
@@ -14,12 +23,20 @@ export class PullRequest {
     this._owner = owner;
     this._repo = repo;
     this._number = pullRequestNumber;
+
+    const configServiceIsSet: boolean = configService !== undefined;
+
+    this._configService = configServiceIsSet
+                          ? configService
+                          : Registry.getElement('ConfigService');
+
+    this._httpClient = new HttpClient(this._configService);
   }
 
-  public static fromData(owner: Owner, repo: Repo, data: JSON): PullRequest {
+  public static fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): PullRequest {
     const pullRequestNumber: number = parseInt(data['number']);
 
-    return new PullRequest(owner, repo, pullRequestNumber);
+    return new PullRequest(owner, repo, pullRequestNumber, configService);
   }
 
   public get number(): number {
@@ -49,6 +66,6 @@ export class PullRequest {
   private _getData(): Promise<JSON> {
     const url: string = `/repos/${this._owner.name}/${this._repo.name}/pulls/${this._number}`;
 
-    return HttpClient.get(url);
+    return this._httpClient.get(url);
   }
 }

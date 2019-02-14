@@ -1,13 +1,26 @@
-import {HttpClient} from '../../HttpClient';
+import {ConfigService, HttpClient, Registry} from '../../index';
+
 import {Repo} from '../Repo';
 
 const maxResultAmount: number = 100;
 
 export abstract class Owner {
+
   protected _name: string;
 
-  constructor(name: string) {
+  protected _configService: ConfigService;
+  protected _httpClient: HttpClient;
+
+  constructor(name: string, configService?: ConfigService) {
     this._name = name;
+
+    const configServiceIsSet: boolean = configService !== undefined;
+
+    this._configService = configServiceIsSet
+                          ? configService
+                          : Registry.getElement('ConfigService');
+
+    this._httpClient = new HttpClient(this._configService);
   }
 
   public async getAllPublicRepos(): Promise<Array<Repo>> {
@@ -21,7 +34,7 @@ export abstract class Owner {
 
     for (let index: number = 1; index <= requestAmount; index++) {
       const url: string = `${baseUrl}/repos?per_page=100&page=${index}`;
-      const response: JSON = await HttpClient.get(url);
+      const response: JSON = await this._httpClient.get(url);
 
       for (const responseIndex in response) {
         const repoData: JSON = response[responseIndex];
@@ -60,6 +73,6 @@ export abstract class Owner {
   private _getData(): Promise<JSON> {
     const url: string = this._getBaseUrl();
 
-    return HttpClient.get(url);
+    return this._httpClient.get(url);
   }
 }

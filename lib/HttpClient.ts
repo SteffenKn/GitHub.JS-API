@@ -7,8 +7,14 @@ interface Header {
 }
 
 export class HttpClient {
-  public static async get(path: string): Promise<JSON> {
-    const url: string = ConfigService.get('endpoint') + path;
+  private _configService: ConfigService;
+
+  constructor(configService: ConfigService) {
+    this._configService = configService;
+  }
+
+  public async get(path: string): Promise<JSON> {
+    const url: string = this._configService.get('endpoint') + path;
 
     const header: Header = this._createHeader();
 
@@ -25,14 +31,14 @@ export class HttpClient {
     });
   }
 
-  public static get endpoint(): string {
-    return ConfigService.get('endpoint');
+  public get endpoint(): string {
+    return this._configService.get('endpoint');
   }
 
-  private static _createHeader(): Header {
+  private _createHeader(): Header {
     const header: Header = {};
 
-    const authToken: string = ConfigService.get('authToken');
+    const authToken: string = this._configService.get('authToken');
 
     const authTokenSet: boolean = authToken !== null;
     if (authTokenSet) {

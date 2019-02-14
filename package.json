@@ -1,6 +1,6 @@
 {
   "name": "github-js-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple JavaScript GitHub API wrapper.",
   "main": "dist/GitHub.js",
   "scripts": {
@@ -14,6 +14,10 @@
     "API",
     "API Wrapper"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:SteffenKn/GitHub.JS-API.git"
+  },
   "author": "Steffen Knaup",
   "license": "ISC",
   "dependencies": {
