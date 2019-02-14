@@ -110,6 +110,11 @@ gitHubApi.printPullRequestData();
   - Get & Set
   - Default: Not set.
 
+- configService
+  - The service where all configs are stored
+  - Type: ConfigService
+  - Get & Set
+
 #### Constructor
 
 - GitHubApi(authToken?: string)
@@ -120,21 +125,27 @@ gitHubApi.printPullRequestData();
 
 #### Functions
 
-- getOrga(orgaName: string): Orga
+- getOrga(orgaName: string, configService?: ConfigService): Orga
   - Parameters
     - orgaName
       - The name of the organization
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created organization
       - Type: Orga
 
-- getUser(userName: string): User
+- getUser(userName: string, configService?: ConfigService): User
   - Parameters
     - userName
       - The name of the user
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created user
@@ -144,11 +155,14 @@ gitHubApi.printPullRequestData();
 
 #### Constructor
 
-- Owner(name: string)
+- Owner(name: string, configService?: ConfigService)
   - Parameters
     - name
       - The name of the owner
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
 #### Variables
 
@@ -167,19 +181,24 @@ gitHubApi.printPullRequestData();
     - A promise containing the data of the owner as JSON
       - Type: JSON
 
-- getRepo(repoName: string): Repo
+- getRepo(repoName: string, configService?: ConfigService): Repo
   - Parameters
     - repoName
       - The name of the repository
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created repository
       - Type: Repo
 
-- getAllPublicRepos(): Promise<Array<Repo>>
+- getAllPublicRepos(configService?: configService): Promise<Array<Repo>>
   - Parameters
-    - None
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - A promise containing all created public repositories
@@ -191,11 +210,14 @@ A GitHub Organization.
 
 #### Constructor
 
-- Orga(name: string)
+- Orga(name: string, configService?: ConfigService)
   - Parameters
     - name
       - The name of the orga
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
 ### User [extends Owner]
 
@@ -203,11 +225,14 @@ A GitHub User.
 
 #### Constructor
 
-- User(name: string)
+- User(name: string, configService?: ConfigService)
   - Parameters
     - name
       - The name of the user
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
 ### Repo
 
@@ -215,7 +240,7 @@ A GitHub Repository.
 
 #### Constructor
 
-- Repo(owner: Owner, name: string)
+- Repo(owner: Owner, name: string, configService?: ConfigService)
   - Parameters
     - owner
       - The owner of the repository
@@ -223,6 +248,9 @@ A GitHub Repository.
     - name
       - The name of the repository
       - Type: string
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
 #### Variables
 
@@ -246,7 +274,7 @@ A GitHub Repository.
     - A promise containing the data of the repository as JSON
       - Type: JSON
 
-- [static] fromData(owner: Owner, data: JSON): Repo
+- [static] fromData(owner: Owner, data: JSON, configService?: ConfigService): Repo
   - Parameters
     - owner
       - The owner of the repository
@@ -254,23 +282,31 @@ A GitHub Repository.
     - data
       - The data of the repository
         - Type: JSON
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created repository
       - Type: Repo
 
-- getPullRequest(pullRequestNumber: number): PullRequest
+- getPullRequest(pullRequestNumber: number, configService?: ConfigService): PullRequest
   - Parameters
     - pullRequestNumber: The number of the pull request
       - Type: number
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created pull request
       - Type: PullRequest
 
-- getOpenPullRequests(): Promise<Array<Repo>>
+- getOpenPullRequests(configService?: ConfigService): Promise<Array<Repo>>
   - Parameters
-    - None
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - A promise containing all created public repositories
@@ -282,7 +318,7 @@ A GitHub Pull Request.
 
 #### Constructor
 
-- PullRequest(owner: Owner, repo: Repo, pullRequestNumber: number)
+- PullRequest(owner: Owner, repo: Repo, pullRequestNumber: number, configService?: ConfigService)
   - Parameters
     - owner
       - The owner of the repository that contains the pull request
@@ -293,6 +329,9 @@ A GitHub Pull Request.
     - pullRequestNumber
       - The number of the pull request
       - Type: number
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
 #### Variables
 
@@ -321,7 +360,7 @@ A GitHub Pull Request.
     - A promise containing the data of the repository as JSON
       - Type: JSON
 
-- [static] fromData(owner: Owner, repo: Repo, data: JSON): Pull Request
+- [static] fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): Pull Request
   - Parameters
     - owner
       - The owner of the repository containing the pull request
@@ -332,6 +371,9 @@ A GitHub Pull Request.
     - data
       - The data of the pull request
       - Type: JSON
+    - configService [optional]
+      - A custom configService
+      - Type: ConfigService
 
   - Returns
     - The created pull request
