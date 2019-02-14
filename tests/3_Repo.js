@@ -84,6 +84,45 @@ describe ('Repo Tests', () => {
     setAuthToken();
   });
 
+  it ('Should Not Get a Private Repo with an Invalid Authtoken (Using withAuthtoken)', (done) => {
+    github.withAuthToken('invalid-test-token').getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Bad credentials';
+
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
+  });
+
+  it ('Should Get a Private Repo with the Correct Authtoken (Using withAuthtoken)', (done) => {
+    const correctAuthToken = github.authToken;
+    github.authToken = 'invalid-test-token';
+
+    github.withAuthToken(correctAuthToken).getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Bad credentials';
+
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
+
+    setAuthToken();
+  });
+
   it ('Should Be Able to Create a Pull Request', () => {
     const pullRequest = github.getOrga("GitHub").getRepo('VisualStudio').getPullRequest(1);
 
