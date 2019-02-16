@@ -381,6 +381,11 @@ A GitHub Pull Request.
 
 ## Changelog
 
+### v0.2.1
+
+- 🐛 **Fix Using ConfigService for User**
+- 🐛 **Fix Using ConfigService for Orga**
+
 ### v0.2.0
 
 - ✨ **Add Declarations**
