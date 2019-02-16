@@ -1,4 +1,5 @@
 import {IPlanData} from './index';
+import { createPlanDataFromJson } from './sub';
 
 export interface IUserData {
   login: string;
@@ -39,4 +40,49 @@ export interface IUserData {
   collaborators: number;
   two_factor_authentication: boolean;
   plan: IPlanData;
+}
+
+export function createUserDataFromJson(json: JSON): IUserData {
+  const userData: IUserData = {
+    login: json['login'],
+    id: json['id'],
+    node_id: json['node_id'],
+    avatar_url: json['avatar_url'],
+    gravatar_id: json['gravatar_id'],
+    url: json['url'],
+    html_url: json['html_url'],
+    followers_url: json['followers_url'],
+    following_url: json['following_url'],
+    gists_url: json['gists_url'],
+    starred_url: json['starred_url'],
+    subscriptions_url: json['subscriptions_url'],
+    organizations_url: json['organizations_url'],
+    repos_url: json['repos_url'],
+    events_url: json['events_url'],
+    received_events_url: json['received_events_url'],
+    type: json['type'],
+    site_admin: json['site_admin'],
+    name: json['name'],
+    company: json['company'],
+    blog: json['blog'],
+    location: json['location'],
+    email: json['email'],
+    hireable: json['hireable'],
+    bio: json['bio'],
+    public_repos: json['public_repos'],
+    public_gists: json['public_gists'],
+    followers: json['followers'],
+    following: json['following'],
+    created_at: json['created_at'],
+    updated_at: json['updated_at'],
+    private_gists: json['private_gists'],
+    total_private_repos: json['total_private_repos'],
+    owned_private_repos: json['owned_private_repos'],
+    disk_usage: json['disk_usage'],
+    collaborators: json['collaborators'],
+    two_factor_authentication: json['two_factor_authentication'],
+    plan: createPlanDataFromJson(json['plan']),
+  };
+
+  return userData;
 }

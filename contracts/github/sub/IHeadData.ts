@@ -1,6 +1,9 @@
-import {ISubUserData} from '../index';
-
-import {ISubRepositoryData} from './index';
+import {
+  createSubRepositoryDataFromJson,
+  createSubUserDataFromJson,
+  ISubRepositoryData,
+  ISubUserData,
+} from '../index';
 
 export interface IHeadData {
   label: string;
@@ -8,4 +11,16 @@ export interface IHeadData {
   sha: string;
   user: ISubUserData;
   repo: ISubRepositoryData;
+}
+
+export function createHeadDataFromJson(json: JSON): IHeadData {
+  const headData: IHeadData = {
+    label: json['label'],
+    ref: json['ref'],
+    sha: json['sha'],
+    user: createSubUserDataFromJson(json['user']),
+    repo: createSubRepositoryDataFromJson(json['repo']),
+  };
+
+  return headData;
 }

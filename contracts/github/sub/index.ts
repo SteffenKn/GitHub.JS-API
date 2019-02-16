@@ -8,3 +8,6 @@ export * from './IPlanData';
 export * from './ISubOrganizationData';
 export * from './ISubRepositoryData';
 export * from './ISubUserData';
+export * from './ILabelData';
+export * from './IMilestoneData';
+export * from './ITeamData';

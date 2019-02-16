@@ -18,3 +18,28 @@ export interface ISubUserData {
   type: string;
   site_admin: boolean;
 }
+
+export function createSubUserDataFromJson(json: JSON): ISubUserData {
+  const subUserData: ISubUserData = {
+    login: json['login'],
+    id: json['id'],
+    node_id: json['node_id'],
+    avatar_url: json['avatar_url'],
+    gravatar_id: json['gravatar_id'],
+    url: json['url'],
+    html_url: json['html_url'],
+    followers_url: json['followers_url'],
+    following_url: json['following_url'],
+    gists_url: json['gists_url'],
+    starred_url: json['starred_url'],
+    subscriptions_url: json['subscriptions_url'],
+    organizations_url: json['organizations_url'],
+    repos_url: json['repos_url'],
+    events_url: json['events_url'],
+    received_events_url: json['received_events_url'],
+    type: json['type'],
+    site_admin: json['site_admin'],
+  };
+
+  return subUserData;
+}

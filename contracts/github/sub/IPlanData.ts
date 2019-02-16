@@ -6,12 +6,12 @@ export interface IPlanData {
 }
 
 export function createPlanDataFromJson(json: JSON): IPlanData {
-  const plan: IPlanData = {
+  const planData: IPlanData = {
     name: json['name'],
-    space: parseInt(json['space']),
-    private_repos: parseInt(json['private_repos']),
-    collaborators: parseInt(json['collaborators']),
+    space: json['space'],
+    private_repos: json['private_repos'],
+    collaborators: json['collaborators'],
   };
 
-  return plan;
+  return planData;
 }
