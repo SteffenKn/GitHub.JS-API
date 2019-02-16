@@ -4,5 +4,5 @@ import {IOrganizationData} from '../index';
 
 export interface IOrga extends IOwner {
 
-  asOrganization(): Promise<IOrganizationData>;
+  asOrganizationData(): Promise<IOrganizationData>;
 }
