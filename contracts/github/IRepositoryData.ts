@@ -64,7 +64,7 @@ export interface IRepositoryData {
   hooks_url: string;
   svn_url: string;
   homepage: string;
-  language: string;
+  language: string | null;
   forks_count: number;
   stargazers_count: number;
   watchers_count: number;
