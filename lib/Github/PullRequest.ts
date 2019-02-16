@@ -1,6 +1,8 @@
 import {
+  createPullRequestDataFromJson,
   IOwner,
   IPullRequest,
+  IPullRequestData,
   IRepo,
 } from '../../contracts/index';
 
@@ -55,6 +57,14 @@ export class PullRequest {
     }
 
     return data;
+  }
+
+  public async asPullRequest(): Promise<IPullRequestData> {
+    const data: JSON = await this.asJson();
+
+    const prData: IPullRequestData = createPullRequestDataFromJson(data);
+
+    return prData;
   }
 
   public get number(): number {
