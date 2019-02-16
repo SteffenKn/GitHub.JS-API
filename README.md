@@ -48,7 +48,7 @@ in case the auth token was not already set in the `config.json`;
 
 ## Usage
 
-JavaScript:
+### JavaScript
 
 ```javascript
 const GitHubApi = require('github-js-api').GitHubApi;
@@ -68,7 +68,7 @@ async function printPullRequestData() {
 printPullRequestData();
 ```
 
-TypeScript:
+### TypeScript
 
 ```typescript
 import {GitHubApi} from 'github-js-api';
@@ -380,6 +380,11 @@ A GitHub Pull Request.
       - Type: PullRequest
 
 ## Changelog
+
+### v0.2.1
+
+- 🐛 **Fix Using ConfigService for User**
+- 🐛 **Fix Using ConfigService for Orga**
 
 ### v0.2.0
 

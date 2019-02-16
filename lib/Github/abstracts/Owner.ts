@@ -23,7 +23,7 @@ export abstract class Owner {
     this._httpClient = new HttpClient(this._configService);
   }
 
-  public async getAllPublicRepos(): Promise<Array<Repo>> {
+  public async getAllPublicRepos(configService?: ConfigService): Promise<Array<Repo>> {
     const baseUrl: string = this._getBaseUrl();
 
     const ownerData: JSON = await this.asJson();
@@ -39,7 +39,7 @@ export abstract class Owner {
       for (const responseIndex in response) {
         const repoData: JSON = response[responseIndex];
 
-        const repo: Repo = Repo.fromData(this, repoData);
+        const repo: Repo = Repo.fromData(this, repoData, configService);
 
         repos.push(repo);
       }
@@ -48,8 +48,8 @@ export abstract class Owner {
     return repos;
   }
 
-  public getRepo(repoName: string): Repo {
-    return new Repo(this, repoName);
+  public getRepo(repoName: string, configService?: ConfigService): Repo {
+    return new Repo(this, repoName, configService);
   }
 
   public get name(): string {
