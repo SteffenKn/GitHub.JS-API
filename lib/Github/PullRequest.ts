@@ -18,7 +18,7 @@ export class PullRequest {
   private _repo: IRepo;
   private _number: number;
 
-  constructor(owner: IOwner, repo: ORepo, pullRequestNumber: number, configService?: ConfigService) {
+  constructor(owner: IOwner, repo: IRepo, pullRequestNumber: number, configService?: ConfigService) {
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
       throw new Error('PullRequestNumber must be a number');
