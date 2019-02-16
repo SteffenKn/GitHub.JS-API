@@ -3,7 +3,6 @@ import {IOwner, IPullRequest, IRepo} from '../../contracts/index';
 import {
   ConfigService,
   HttpClient,
-  Owner,
   PullRequest,
   Registry,
 } from '../index';

@@ -1,16 +1,13 @@
 import {
   IOwner,
   IPullRequest,
-  IPullRequestData,
   IRepo,
 } from '../../contracts/index';
 
 import {
   ConfigService,
   HttpClient,
-  Owner,
   Registry,
-  Repo,
 } from '../index';
 
 export class PullRequest {
