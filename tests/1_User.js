@@ -52,6 +52,32 @@ describe ('User Tests', () => {
 
     expect(repo.name).to.equal('Cloudflare-DDNS-Sync');
   });
+
+  it ('Should Be Able to Get the Logged In User', async () => {
+    const user = await github.getLoggedInUser();
+
+    const userData = await user.asUserData();
+    const userName = userData.login;
+
+    expect(userName).to.equal(config.LOGGED_IN_USER);
+  });
+
+  it ('Should Not Be Able to Get the Logged In User With Invalid AuthToken', (done) => {
+    github.withAuthToken().getLoggedInUser()
+      .then(() => {
+        done('Did not throw an error');
+      })
+      .catch((error) => {
+        const expectedErrorMessage = 'Error: Authtoken must be provided to use "getLoggedInUser"';
+
+        const isCorrectError = error.message === expectedErrorMessage;
+        if(isCorrectError){
+          done();
+        } else {
+          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
+        }
+      });
+  });
 });
 
 function setAuthToken() {

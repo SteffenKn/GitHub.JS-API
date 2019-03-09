@@ -1,5 +1,6 @@
 {
   "AUTH_TOKEN": "",
   "PRIVATE_REPO_OWNER": "SteffenKn",
-  "PRIVATE_REPO_NAME": "Test-Repo"
+  "PRIVATE_REPO_NAME": "Test-Repo",
+  "LOGGED_IN_USER": "SteffenKn"
 }
