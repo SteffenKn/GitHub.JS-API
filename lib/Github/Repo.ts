@@ -33,7 +33,7 @@ export class Repo {
     return new Repo(owner, repoName, configService);
   }
 
-  public async getOpenPullRequests(configService?: ConfigService): Promise<Array<IPullRequest>> {
+  public async getOpenPullRequests(): Promise<Array<IPullRequest>> {
     const pullRequests: Array<IPullRequest> = [];
 
     let pullRequestsFound: boolean = true;
@@ -46,7 +46,7 @@ export class Repo {
       for (const responseIndex in response) {
         const pullRequestData: JSON = response[responseIndex];
 
-        const pullRequest: IPullRequest = PullRequest.fromData(this._owner, this, pullRequestData, configService);
+        const pullRequest: IPullRequest = PullRequest.fromData(this._owner, this, pullRequestData, this._configService);
 
         pullRequests.push(pullRequest);
       }
@@ -58,8 +58,8 @@ export class Repo {
     return pullRequests;
   }
 
-  public getPullRequest(pullRequestNumber: number, configService?: ConfigService): IPullRequest {
-    return new PullRequest(this._owner, this, pullRequestNumber, configService);
+  public getPullRequest(pullRequestNumber: number): IPullRequest {
+    return new PullRequest(this._owner, this, pullRequestNumber, this._configService);
   }
 
   public async asJson(): Promise<JSON> {

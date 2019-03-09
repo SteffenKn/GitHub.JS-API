@@ -64,9 +64,15 @@ export class GitHubApi {
   }
 
   public withAuthToken(authToken: string): GitHubApi {
-    this.authToken = authToken;
+    const config: Map<string, any> = this._configService.getCopyOfConfig();
 
-    return this;
+    const newConfigService: ConfigService = new ConfigService();
+    newConfigService.loadConfig(config);
+    newConfigService.set('authToken', authToken);
+
+    const newGithubApi: GitHubApi = GitHubApi.withCustomConfigService(newConfigService);
+
+    return newGithubApi;
   }
 
   public getOrga(orgaName: string): IOrga {
