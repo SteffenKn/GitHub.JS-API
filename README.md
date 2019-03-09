@@ -151,6 +151,13 @@ gitHubApi.printPullRequestData();
     - The created user
       - Type: IUser
 
+- getLoggedInUser(): Promise<IUser>
+  - Parameters
+
+  - Returns
+    - A Promise containing logged in user
+      - Type: IUser
+
 ### Owner [abstract]
 
 #### Constructor
