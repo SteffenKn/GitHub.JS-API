@@ -101,6 +101,13 @@ describe ('Repo Tests', () => {
       });
   });
 
+  it ('Authtoken should not have changed by withAuthtoken', async () => {
+    const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+    const repoName = repoData['name'];
+
+    expect(repoName).to.equal('Test-Repo');
+  });
+
   it ('Should Get a Private Repo with the Correct Authtoken (Using withAuthtoken)', (done) => {
     const correctAuthToken = github.authToken;
     github.authToken = 'invalid-test-token';
