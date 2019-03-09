@@ -77,11 +77,11 @@ class GitHubApiSample {
   public gitHub: GitHubApi = new GitHubApi();
 
   public async printPullRequestData() {
-    const pullRequestData = await this.gitHub
-                                        .getUser('octocat')
-                                        .getRepo('Hello-World')
-                                        .getPullRequest(493)
-                                        .asJson();
+    const pullRequestData: JSON = await this.gitHub
+                                              .getUser('octocat')
+                                              .getRepo('Hello-World')
+                                              .getPullRequest(493)
+                                              .asJson();
 
    console.log(pullRequestData);
   }
