@@ -1,3 +1,5 @@
+import {IRepo} from '../../../contracts/index';
+
 import {ConfigService, HttpClient, Registry} from '../../index';
 
 import {Repo} from '../Repo';
@@ -23,14 +25,14 @@ export abstract class Owner {
     this._httpClient = new HttpClient(this._configService);
   }
 
-  public async getAllPublicRepos(configService?: ConfigService): Promise<Array<Repo>> {
+  public async getAllPublicRepos(): Promise<Array<IRepo>> {
     const baseUrl: string = this._getBaseUrl();
 
     const ownerData: JSON = await this.asJson();
     const publicRepoAmount: number = ownerData['public_repos'];
     const requestAmount: number = Math.ceil(publicRepoAmount / maxResultAmount);
 
-    const repos: Array<Repo> = [];
+    const repos: Array<IRepo> = [];
 
     for (let index: number = 1; index <= requestAmount; index++) {
       const url: string = `${baseUrl}/repos?per_page=100&page=${index}`;
@@ -39,7 +41,7 @@ export abstract class Owner {
       for (const responseIndex in response) {
         const repoData: JSON = response[responseIndex];
 
-        const repo: Repo = Repo.fromData(this, repoData, configService);
+        const repo: IRepo = Repo.fromData(this, repoData, this._configService);
 
         repos.push(repo);
       }
@@ -48,8 +50,8 @@ export abstract class Owner {
     return repos;
   }
 
-  public getRepo(repoName: string, configService?: ConfigService): Repo {
-    return new Repo(this, repoName, configService);
+  public getRepo(repoName: string): IRepo {
+    return new Repo(this, repoName, this._configService);
   }
 
   public get name(): string {

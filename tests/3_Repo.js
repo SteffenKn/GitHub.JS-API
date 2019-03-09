@@ -15,8 +15,8 @@ describe ('Repo Tests', () => {
     const user = github.getUser("SteffenKn");
     const repo = user.getRepo("Cloudflare-DDNS-Sync");
 
-    const repoData = await repo.asJson();
-    const repoName = repoData['name'];
+    const repoData = await repo.asRepositoryData();
+    const repoName = repoData.name;
 
     expect(repoName).to.equal('cloudflare-ddns-sync');
   });
@@ -28,8 +28,8 @@ describe ('Repo Tests', () => {
     const repoNames = [];
 
     for(const repo of repos) {
-      const repoData = await repo.asJson();
-      const repoName = repoData['name'];
+      const repoData = await repo.asRepositoryData();
+      const repoName = repoData.name;
 
       repoNames.push(repoName);
     }
@@ -40,7 +40,7 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should Throw an Error When Trying to Get a Repo That Does Not Exist', (done) => {
-    github.getUser('SteffenKn').getRepo('Not-Existing-Repo').asJson()
+    github.getUser('SteffenKn').getRepo('Not-Existing-Repo').asRepositoryData()
       .then(() => {
         done('Did not throw an error');
       })
@@ -57,8 +57,8 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should Get a Private Repo with the Correct Authtoken', async () => {
-    const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
-    const repoName = repoData['name'];
+    const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asRepositoryData()
+    const repoName = repoData.name;
 
     expect(repoName).to.equal('Test-Repo');
   });
@@ -66,7 +66,7 @@ describe ('Repo Tests', () => {
   it ('Should Not Get a Private Repo with an Invalid Authtoken', (done) => {
     github.authToken = 'invalid-test-token';
 
-    github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+    github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asRepositoryData()
       .then(() => {
         done('Did not throw an error');
       })
@@ -85,7 +85,7 @@ describe ('Repo Tests', () => {
   });
 
   it ('Should Not Get a Private Repo with an Invalid Authtoken (Using withAuthtoken)', (done) => {
-    github.withAuthToken('invalid-test-token').getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+    github.withAuthToken('invalid-test-token').getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asRepositoryData()
       .then(() => {
         done('Did not throw an error');
       })
@@ -101,23 +101,23 @@ describe ('Repo Tests', () => {
       });
   });
 
+  it ('Authtoken should not have changed by withAuthtoken', async () => {
+    const repoData = await github.getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asRepositoryData()
+    const repoName = repoData.name;
+
+    expect(repoName).to.equal('Test-Repo');
+  });
+
   it ('Should Get a Private Repo with the Correct Authtoken (Using withAuthtoken)', (done) => {
     const correctAuthToken = github.authToken;
     github.authToken = 'invalid-test-token';
 
-    github.withAuthToken(correctAuthToken).getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
+    github.withAuthToken(correctAuthToken).getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asRepositoryData()
       .then(() => {
-        done('Did not throw an error');
+        done();
       })
       .catch((error) => {
-        const expectedErrorMessage = 'Bad credentials';
-
-        const isCorrectError = error.message === expectedErrorMessage;
-        if(isCorrectError){
-          done();
-        } else {
-          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
-        }
+        done(`An error was thrown: ${error}`);
       });
 
     setAuthToken();

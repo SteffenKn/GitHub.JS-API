@@ -1,20 +1,26 @@
 import {
+  createPullRequestDataFromJson,
+  IOwner,
+  IPullRequest,
+  IPullRequestData,
+  IRepo,
+} from '../../contracts/index';
+
+import {
   ConfigService,
   HttpClient,
-  Owner,
   Registry,
-  Repo,
 } from '../index';
 
 export class PullRequest {
   private _configService: ConfigService;
   private _httpClient: HttpClient;
 
-  private _owner: Owner;
-  private _repo: Repo;
+  private _owner: IOwner;
+  private _repo: IRepo;
   private _number: number;
 
-  constructor(owner: Owner, repo: Repo, pullRequestNumber: number, configService?: ConfigService) {
+  constructor(owner: IOwner, repo: IRepo, pullRequestNumber: number, configService?: ConfigService) {
     const pullRequestNumberIsNoNumber: boolean = isNaN(parseInt(`${pullRequestNumber}`));
     if (pullRequestNumberIsNoNumber) {
       throw new Error('PullRequestNumber must be a number');
@@ -33,22 +39,12 @@ export class PullRequest {
     this._httpClient = new HttpClient(this._configService);
   }
 
-  public static fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): PullRequest {
+  public static fromData(owner: IOwner, repo: IRepo, data: JSON, configService?: ConfigService): IPullRequest {
     const pullRequestNumber: number = parseInt(data['number']);
 
-    return new PullRequest(owner, repo, pullRequestNumber, configService);
-  }
+    const pullRequest: IPullRequest = new PullRequest(owner, repo, pullRequestNumber, configService);
 
-  public get number(): number {
-    return this._number;
-  }
-
-  public get owner(): Owner {
-    return this._owner;
-  }
-
-  public get repo(): Repo {
-    return this._repo;
+    return pullRequest;
   }
 
   public async asJson(): Promise<JSON> {
@@ -61,6 +57,26 @@ export class PullRequest {
     }
 
     return data;
+  }
+
+  public async asPullRequestData(): Promise<IPullRequestData> {
+    const data: JSON = await this.asJson();
+
+    const prData: IPullRequestData = createPullRequestDataFromJson(data);
+
+    return prData;
+  }
+
+  public get number(): number {
+    return this._number;
+  }
+
+  public get owner(): IOwner {
+    return this._owner;
+  }
+
+  public get repo(): IRepo {
+    return this._repo;
   }
 
   private _getData(): Promise<JSON> {

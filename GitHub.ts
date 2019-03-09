@@ -1,5 +1,13 @@
 import {
+  createUserDataFromJson,
+  IOrga,
+  IUser,
+  IUserData,
+} from './contracts/index';
+
+import {
   ConfigService,
+  HttpClient,
   Orga,
   Registry,
   User,
@@ -62,20 +70,48 @@ export class GitHubApi {
   }
 
   public withAuthToken(authToken: string): GitHubApi {
-    this.authToken = authToken;
+    const config: Map<string, any> = this._configService.getCopyOfConfig();
 
-    return this;
+    const newConfigService: ConfigService = new ConfigService();
+    newConfigService.loadConfig(config);
+    newConfigService.set('authToken', authToken);
+
+    const newGithubApi: GitHubApi = GitHubApi.withCustomConfigService(newConfigService);
+
+    return newGithubApi;
   }
 
-  public getOrga(orgaName: string): Orga {
-    const orga: Orga = new Orga(orgaName, this._configService);
+  public getOrga(orgaName: string): IOrga {
+    const orga: IOrga = new Orga(orgaName, this._configService);
 
     return orga;
   }
 
-  public getUser(username: string): User {
-    const user: User = new User(username, this._configService);
+  public getUser(username: string): IUser {
+    const user: IUser = new User(username, this._configService);
 
+    return user;
+  }
+
+  public async getLoggedInUser(): Promise<IUser> {
+    const authTokenIsNotSet: boolean = this._configService.get('authToken') === undefined;
+    if (authTokenIsNotSet) {
+      throw new Error('Error: Authtoken must be provided to use "getLoggedInUser"');
+    }
+
+    const httpClient: HttpClient = new HttpClient(this._configService);
+
+    const userDataAsJson: JSON = await httpClient.get('/user');
+
+    const errorGettingData: boolean = userDataAsJson['message'] !== undefined;
+
+    if (errorGettingData) {
+      throw new Error(userDataAsJson['message']);
+    }
+
+    const userData: IUserData = createUserDataFromJson(userDataAsJson);
+
+    const user: IUser = new User(userData.login, this._configService);
     return user;
   }
 }

@@ -1,7 +1,14 @@
 import {
+  createRepositoryDataFromJson,
+  IOwner,
+  IPullRequest,
+  IRepo,
+  IRepositoryData,
+} from '../../contracts/index';
+
+import {
   ConfigService,
   HttpClient,
-  Owner,
   PullRequest,
   Registry,
 } from '../index';
@@ -10,10 +17,10 @@ export class Repo {
   private _configService: ConfigService;
   private _httpClient: HttpClient;
 
-  private _owner: Owner;
+  private _owner: IOwner;
   private _name: string;
 
-  constructor(owner: Owner, name: string, configService?: ConfigService) {
+  constructor(owner: IOwner, name: string, configService?: ConfigService) {
     this._owner = owner;
     this._name = name;
 
@@ -26,14 +33,14 @@ export class Repo {
     this._httpClient = new HttpClient(this._configService);
   }
 
-  public static fromData(owner: Owner, data: JSON, configService?: ConfigService): Repo {
+  public static fromData(owner: IOwner, data: JSON, configService?: ConfigService): IRepo {
     const repoName: string = data['name'];
 
     return new Repo(owner, repoName, configService);
   }
 
-  public async getOpenPullRequests(configService?: ConfigService): Promise<Array<PullRequest>> {
-    const pullRequests: Array<PullRequest> = [];
+  public async getOpenPullRequests(): Promise<Array<IPullRequest>> {
+    const pullRequests: Array<IPullRequest> = [];
 
     let pullRequestsFound: boolean = true;
     let pageIndex: number = 1;
@@ -45,7 +52,7 @@ export class Repo {
       for (const responseIndex in response) {
         const pullRequestData: JSON = response[responseIndex];
 
-        const pullRequest: PullRequest = PullRequest.fromData(this._owner, this, pullRequestData, configService);
+        const pullRequest: IPullRequest = PullRequest.fromData(this._owner, this, pullRequestData, this._configService);
 
         pullRequests.push(pullRequest);
       }
@@ -57,22 +64,8 @@ export class Repo {
     return pullRequests;
   }
 
-  public getPullRequest(pullRequestNumber: number, configService?: ConfigService): PullRequest {
-    return new PullRequest(this._owner, this, pullRequestNumber, configService);
-  }
-
-  private _getData(): Promise<JSON> {
-    const url: string = `/repos/${this._owner.name}/${this._name}`;
-
-    return this._httpClient.get(url);
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public get owner(): Owner {
-    return this._owner;
+  public getPullRequest(pullRequestNumber: number): IPullRequest {
+    return new PullRequest(this._owner, this, pullRequestNumber, this._configService);
   }
 
   public async asJson(): Promise<JSON> {
@@ -85,5 +78,27 @@ export class Repo {
     }
 
     return data;
+  }
+
+  public async asRepositoryData(): Promise<IRepositoryData> {
+    const data: JSON = await this.asJson();
+
+    const repoData: IRepositoryData = createRepositoryDataFromJson(data);
+
+    return repoData;
+  }
+
+  private _getData(): Promise<JSON> {
+    const url: string = `/repos/${this._owner.name}/${this._name}`;
+
+    return this._httpClient.get(url);
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get owner(): IOwner {
+    return this._owner;
   }
 }

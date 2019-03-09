@@ -20,14 +20,14 @@ describe ('Orga Tests', () => {
   it ('Should Be Able to Get Data from an Orga', async () => {
     const orga = github.getOrga("GitHub");
 
-    const orgaData = await orga.asJson();
-    const orgaName = orgaData['name'];
+    const orgaData = await orga.asOrganizationData();
+    const orgaName = orgaData.name;
 
     expect(orgaName).to.equal('GitHub');
   });
 
   it ('Should Not Be Able to Get Data from an Invalid Orga', (done) => {
-    github.getOrga("Not-Existing-Orga").asJson()
+    github.getOrga("Not-Existing-Orga").asOrganizationData()
       .then(() => {
         done('Did not throw an error');
       })

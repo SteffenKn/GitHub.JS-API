@@ -77,11 +77,11 @@ class GitHubApiSample {
   public gitHub: GitHubApi = new GitHubApi();
 
   public async printPullRequestData() {
-    const pullRequestData = await this.gitHub
-                                        .getUser('octocat')
-                                        .getRepo('Hello-World')
-                                        .getPullRequest(493)
-                                        .asJson();
+    const pullRequestData: JSON = await this.gitHub
+                                              .getUser('octocat')
+                                              .getRepo('Hello-World')
+                                              .getPullRequest(493)
+                                              .asJson();
 
    console.log(pullRequestData);
   }
@@ -125,7 +125,7 @@ gitHubApi.printPullRequestData();
 
 #### Functions
 
-- getOrga(orgaName: string, configService?: ConfigService): Orga
+- getOrga(orgaName: string, configService?: ConfigService): IOrga
   - Parameters
     - orgaName
       - The name of the organization
@@ -136,9 +136,9 @@ gitHubApi.printPullRequestData();
 
   - Returns
     - The created organization
-      - Type: Orga
+      - Type: IOrga
 
-- getUser(userName: string, configService?: ConfigService): User
+- getUser(userName: string, configService?: ConfigService): IUser
   - Parameters
     - userName
       - The name of the user
@@ -149,7 +149,14 @@ gitHubApi.printPullRequestData();
 
   - Returns
     - The created user
-      - Type: User
+      - Type: IUser
+
+- getLoggedInUser(): Promise<IUser>
+  - Parameters
+
+  - Returns
+    - A Promise containing logged in user
+      - Type: IUser
 
 ### Owner [abstract]
 
@@ -178,10 +185,10 @@ gitHubApi.printPullRequestData();
     - None
 
   - Returns
-    - A promise containing the data of the owner as JSON
+    - A promise containing the data of the owner
       - Type: JSON
 
-- getRepo(repoName: string, configService?: ConfigService): Repo
+- getRepo(repoName: string, configService?: ConfigService): IRepo
   - Parameters
     - repoName
       - The name of the repository
@@ -192,9 +199,9 @@ gitHubApi.printPullRequestData();
 
   - Returns
     - The created repository
-      - Type: Repo
+      - Type: IRepo
 
-- getAllPublicRepos(configService?: configService): Promise<Array<Repo>>
+- getAllPublicRepos(configService?: configService): Promise<Array<IRepo>>
   - Parameters
     - configService [optional]
       - A custom configService
@@ -202,7 +209,7 @@ gitHubApi.printPullRequestData();
 
   - Returns
     - A promise containing all created public repositories
-      - Type: Promise<Array<Repo>>
+      - Type: Promise<Array<IRepo>>
 
 ### Orga [extends Owner]
 
@@ -219,6 +226,16 @@ A GitHub Organization.
       - A custom configService
       - Type: ConfigService
 
+#### Functions
+
+- asOrgaData(): Promise<IOrganizationData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the organization
+      - Type: IOrganizationData
+
 ### User [extends Owner]
 
 A GitHub User.
@@ -234,17 +251,27 @@ A GitHub User.
       - A custom configService
       - Type: ConfigService
 
+#### Functions
+
+- asUserData(): Promise<IUserData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the user
+      - Type: IUserData
+
 ### Repo
 
 A GitHub Repository.
 
 #### Constructor
 
-- Repo(owner: Owner, name: string, configService?: ConfigService)
+- Repo(owner: IOwner, name: string, configService?: ConfigService)
   - Parameters
     - owner
       - The owner of the repository
-      - Type: owner
+      - Type: IOwner
     - name
       - The name of the repository
       - Type: string
@@ -261,7 +288,7 @@ A GitHub Repository.
 
 - owner
   - The owner of the repository
-  - Type: Owner
+  - Type: IOwner
   - Get
 
 #### Functions
@@ -271,14 +298,22 @@ A GitHub Repository.
     - None
 
   - Returns
-    - A promise containing the data of the repository as JSON
+    - A promise containing the data of the repository
       - Type: JSON
 
-- [static] fromData(owner: Owner, data: JSON, configService?: ConfigService): Repo
+- asRepositoryData(): Promise<IRepositoryData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the repository
+      - Type: IRepositoryData
+
+- [static] fromData(owner: IOwner, data: JSON, configService?: ConfigService): IRepo
   - Parameters
     - owner
       - The owner of the repository
-        - Type: Owner
+        - Type: IOwner
     - data
       - The data of the repository
         - Type: JSON
@@ -288,9 +323,9 @@ A GitHub Repository.
 
   - Returns
     - The created repository
-      - Type: Repo
+      - Type: IRepo
 
-- getPullRequest(pullRequestNumber: number, configService?: ConfigService): PullRequest
+- getPullRequest(pullRequestNumber: number, configService?: ConfigService): IPullRequest
   - Parameters
     - pullRequestNumber: The number of the pull request
       - Type: number
@@ -300,9 +335,9 @@ A GitHub Repository.
 
   - Returns
     - The created pull request
-      - Type: PullRequest
+      - Type: IPullRequest
 
-- getOpenPullRequests(configService?: ConfigService): Promise<Array<Repo>>
+- getOpenPullRequests(configService?: ConfigService): Promise<Array<IRepo>>
   - Parameters
     - configService [optional]
       - A custom configService
@@ -310,7 +345,7 @@ A GitHub Repository.
 
   - Returns
     - A promise containing all created public repositories
-      - Type: Promise<Array<Repo>>
+      - Type: Promise<Array<IRepo>>
 
 ### Pull Request
 
@@ -318,14 +353,14 @@ A GitHub Pull Request.
 
 #### Constructor
 
-- PullRequest(owner: Owner, repo: Repo, pullRequestNumber: number, configService?: ConfigService)
+- PullRequest(owner: IOwner, repo: IRepo, pullRequestNumber: number, configService?: ConfigService)
   - Parameters
     - owner
       - The owner of the repository that contains the pull request
-      - Type: Owner
+      - Type: IOwner
     - repo
       - The repository that contains the pull request
-      - Type: Repo
+      - Type: IRepo
     - pullRequestNumber
       - The number of the pull request
       - Type: number
@@ -342,12 +377,12 @@ A GitHub Pull Request.
 
 - repo
   - The repository containing the pull request
-  - Type: Repo
+  - Type: IRepo
   - Get
 
 - owner
   - The owner of the repository containing the pull request
-  - Type: Owner
+  - Type: IOwner
   - Get
 
 #### Functions
@@ -357,17 +392,25 @@ A GitHub Pull Request.
     - None
 
   - Returns
-    - A promise containing the data of the repository as JSON
+    - A promise containing the data of the pull request
       - Type: JSON
 
-- [static] fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): Pull Request
+- asPullRequestData(): Promise<IPullRequestData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the pull request
+      - Type: IPullRequestData
+
+- [static] fromData(owner: IOwner, repo: IRepo, data: JSON, configService?: ConfigService): Pull Request
   - Parameters
     - owner
       - The owner of the repository containing the pull request
-      - Type: Owner
+      - Type: IOwner
     - repo
       - The repository containing the pull request
-      - Type: Repo
+      - Type: IRepo
     - data
       - The data of the pull request
       - Type: JSON
@@ -377,9 +420,17 @@ A GitHub Pull Request.
 
   - Returns
     - The created pull request
-      - Type: PullRequest
+      - Type: IPullRequest
 
 ## Changelog
+
+### v0.3.0
+
+- ✨ **Add getLoggedInUser**
+- 🐛 **Fix Bug That Changed The Authtoken When Using withAuthtoken**
+- ✨ **Add Interfaces**
+- ✅ **Add Tests for getLoggedInUser**
+- ✅ ♻️ **Use Interfaces in Tests**
 
 ### v0.2.1
 
