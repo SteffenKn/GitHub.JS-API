@@ -107,17 +107,10 @@ describe ('Repo Tests', () => {
 
     github.withAuthToken(correctAuthToken).getUser(config.PRIVATE_REPO_OWNER).getRepo(config.PRIVATE_REPO_NAME).asJson()
       .then(() => {
-        done('Did not throw an error');
+        done();
       })
       .catch((error) => {
-        const expectedErrorMessage = 'Bad credentials';
-
-        const isCorrectError = error.message === expectedErrorMessage;
-        if(isCorrectError){
-          done();
-        } else {
-          done(`Wrong error was thrown. Expected: "${expectedErrorMessage}", but got "${error.message}"`);
-        }
+        done(`An error was thrown: ${error}`);
       });
 
     setAuthToken();
