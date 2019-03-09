@@ -424,6 +424,10 @@ A GitHub Pull Request.
 
 ## Changelog
 
+### v0.3.1
+
+- 🐛 **Add Missing Functions to Interfaces**
+
 ### v0.3.0
 
 - ✨ **Add getLoggedInUser**
