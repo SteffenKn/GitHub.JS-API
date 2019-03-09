@@ -1,7 +1,13 @@
-import {IOrga, IUser} from './contracts/index';
+import {
+  createUserDataFromJson,
+  IOrga,
+  IUser,
+  IUserData,
+} from './contracts/index';
 
 import {
   ConfigService,
+  HttpClient,
   Orga,
   Registry,
   User,
@@ -84,6 +90,21 @@ export class GitHubApi {
   public getUser(username: string): IUser {
     const user: IUser = new User(username, this._configService);
 
+    return user;
+  }
+
+  public async getLoggedInUser(): Promise<IUser> {
+    const authTokenIsNotSet: boolean = this._configService.get('authToken') === undefined;
+    if (authTokenIsNotSet) {
+      throw new Error('Error: Authtoken must be provided to use "getLoggedInUser"');
+    }
+
+    const httpClient: HttpClient = new HttpClient(this._configService);
+
+    const userDataAsJson: JSON = await httpClient.get('/user');
+    const userData: IUserData = createUserDataFromJson(userDataAsJson);
+
+    const user: IUser = new User(userData.name, this._configService);
     return user;
   }
 }
