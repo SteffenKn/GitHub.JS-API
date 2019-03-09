@@ -10,7 +10,7 @@ export interface IMilestoneData {
   state: string;
   title: string;
   description: string;
-  creator: ISubUserData;
+  creator: ISubUserData | null;
   open_issues: number;
   closed_issues: number;
   created_at: string;
@@ -19,7 +19,11 @@ export interface IMilestoneData {
   due_on: string;
 }
 
-export function createMilestoneDataFromJson(json: JSON): IMilestoneData {
+export function createMilestoneDataFromJson(json: JSON): IMilestoneData | null {
+  if (json === null) {
+    return null;
+  }
+
   const milestoneData: IMilestoneData = {
     url: json['url'],
     html_url: json['html_url'],

@@ -6,7 +6,11 @@ export interface ILicenseData {
   node_id: string;
 }
 
-export function createLicenseDataFromJson(json: JSON): ILicenseData {
+export function createLicenseDataFromJson(json: JSON): ILicenseData | null {
+  if (json === null) {
+    return null;
+  }
+
   const licenseData: ILicenseData = {
     key: json['key'],
     name: json['name'],

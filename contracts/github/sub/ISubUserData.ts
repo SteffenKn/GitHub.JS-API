@@ -19,7 +19,11 @@ export interface ISubUserData {
   site_admin: boolean;
 }
 
-export function createSubUserDataFromJson(json: JSON): ISubUserData {
+export function createSubUserDataFromJson(json: JSON): ISubUserData | null {
+  if (json === null) {
+    return null;
+  }
+
   const subUserData: ISubUserData = {
     login: json['login'],
     id: json['id'],

@@ -9,8 +9,8 @@ export interface IBaseData {
   label: string;
   ref: string;
   sha: string;
-  user: ISubUserData;
-  repo: ISubRepositoryData;
+  user: ISubUserData | null;
+  repo: ISubRepositoryData | undefined;
 }
 
 export function createBaseDataFromJson(json: JSON): IBaseData {

@@ -19,7 +19,11 @@ export interface ISubOrganizationData {
   site_admin: boolean;
 }
 
-export function createSubOrganizationDataFromJson(json: JSON): ISubOrganizationData {
+export function createSubOrganizationDataFromJson(json: JSON): ISubOrganizationData | undefined {
+  if (json === undefined) {
+    return undefined;
+  }
+
   const subOrganizationData: ISubOrganizationData = {
     login: json['login'],
     id: json['id'],

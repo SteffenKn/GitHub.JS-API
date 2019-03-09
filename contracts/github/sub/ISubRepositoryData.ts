@@ -7,7 +7,7 @@ export interface ISubRepositoryData {
   node_id: string;
   name: string;
   full_name: string;
-  owner: ISubUserData;
+  owner: ISubUserData | null;
   private: boolean;
   html_url: string;
   description: string;
@@ -72,7 +72,7 @@ export interface ISubRepositoryData {
   pushed_at: string;
   created_at: string;
   updated_at: string;
-  permissions: IPermissionsData;
+  permissions: IPermissionsData | undefined;
   allow_rebase_merge: boolean;
   allow_squash_merge: boolean;
   allow_merge_commit: boolean;
@@ -80,7 +80,11 @@ export interface ISubRepositoryData {
   network_count: number;
 }
 
-export function createSubRepositoryDataFromJson(json: JSON): ISubRepositoryData {
+export function createSubRepositoryDataFromJson(json: JSON): ISubRepositoryData | undefined {
+  if (json === undefined) {
+    return undefined;
+  }
+
   const subRepositoryData: ISubRepositoryData = {
     id: json['id'],
     node_id: json['node_id'],

@@ -4,7 +4,11 @@ export interface IPermissionsData {
   pull: boolean;
 }
 
-export function createPermissionsDataFromJson(json: JSON): IPermissionsData {
+export function createPermissionsDataFromJson(json: JSON): IPermissionsData | undefined {
+  if (json === undefined) {
+    return undefined;
+  }
+
   const permissionsData: IPermissionsData = {
     admin: json['admin'],
     push: json['push'],

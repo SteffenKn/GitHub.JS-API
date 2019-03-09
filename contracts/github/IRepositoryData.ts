@@ -16,7 +16,7 @@ export interface IRepositoryData {
   node_id: string;
   name: string;
   full_name: string;
-  owner: ISubUserData;
+  owner: ISubUserData | null;
   private: boolean;
   html_url: string;
   description: string;
@@ -81,16 +81,16 @@ export interface IRepositoryData {
   pushed_at: string;
   created_at: string;
   updated_at: string;
-  permissions: IPermissionsData;
+  permissions: IPermissionsData | undefined;
   allow_rebase_merge: boolean;
   allow_squash_merge: boolean;
   allow_merge_commit: boolean;
   subscribers_count: number;
   network_count: number;
-  license: ILicenseData;
-  organization: ISubOrganizationData;
-  parent: ISubRepositoryData;
-  source: ISubRepositoryData;
+  license: ILicenseData | null;
+  organization: ISubOrganizationData | undefined;
+  parent: ISubRepositoryData | undefined;
+  source: ISubRepositoryData | undefined;
 }
 
 export function createRepositoryDataFromJson(json: JSON): IRepositoryData {

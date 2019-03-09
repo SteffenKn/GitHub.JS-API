@@ -9,8 +9,8 @@ export interface IHeadData {
   label: string;
   ref: string;
   sha: string;
-  user: ISubUserData;
-  repo: ISubRepositoryData;
+  user: ISubUserData | null;
+  repo: ISubRepositoryData | undefined;
 }
 
 export function createHeadDataFromJson(json: JSON): IHeadData {

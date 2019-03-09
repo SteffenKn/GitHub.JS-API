@@ -32,17 +32,17 @@ export interface IPullRequestData {
   state: string;
   locked: boolean;
   title: string;
-  user: ISubUserData;
+  user: ISubUserData | null;
   body: string;
   labels: Array<ILabelData>;
-  milestone: IMilestoneData;
+  milestone: IMilestoneData | null;
   active_lock_reason: string;
   created_at: string;
   updated_at: string;
   closed_at: string;
   merged_at: string;
   merge_commit_sha: string;
-  assignee: ISubUserData;
+  assignee: ISubUserData | null;
   assignees: Array<ISubUserData>;
   requested_reviewers: Array<ISubUserData>;
   requested_teams: Array<ITeamData>;
@@ -54,7 +54,7 @@ export interface IPullRequestData {
   mergeable: boolean;
   rebaseable: boolean;
   mergeable_state: string;
-  merged_by: ISubUserData;
+  merged_by: ISubUserData | null;
   comments: number;
   review_comments: number;
   maintainer_can_modify: boolean;
@@ -121,7 +121,11 @@ function _createSubUserDataArrayFromJson(json: JSON): Array<ISubUserData> {
   const subUsers: Array<ISubUserData> = [];
 
   for (const index in json) {
-    const subUser: ISubUserData = createSubUserDataFromJson(json[index]);
+    const subUser: ISubUserData | null = createSubUserDataFromJson(json[index]);
+
+    if (subUser ===  null) {
+      continue;
+    }
 
     subUsers.push(subUser);
   }
