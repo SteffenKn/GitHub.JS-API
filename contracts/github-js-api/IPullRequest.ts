@@ -1,3 +1,4 @@
+import {IPullRequestData} from '../github/index';
 import {IOwner, IRepo} from './index';
 
 export interface IPullRequest {
@@ -6,4 +7,5 @@ export interface IPullRequest {
   readonly number: number;
 
   asJson(): Promise<JSON>;
+  asPullRequestData(): Promise<IPullRequestData>;
 }
