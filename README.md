@@ -424,6 +424,14 @@ A GitHub Pull Request.
 
 ## Changelog
 
+### v0.3.0
+
+- ✨ **Add getLoggedInUser**
+- 🐛 **Fix Bug That Changed The Authtoken When Using withAuthtoken**
+- ✨ **Add Interfaces**
+- ✅ **Add Tests for getLoggedInUser**
+- ✅ ♻️ **Use Interfaces in Tests**
+
 ### v0.2.1
 
 - 🐛 **Fix Using ConfigService for User**
