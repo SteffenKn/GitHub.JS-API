@@ -20,7 +20,8 @@ export interface IMilestoneData {
 }
 
 export function createMilestoneDataFromJson(json: JSON): IMilestoneData | null {
-  if (json === null) {
+  const milestoneIsNull: boolean = json === null;
+  if (milestoneIsNull) {
     return null;
   }
 

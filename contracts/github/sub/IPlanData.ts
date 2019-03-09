@@ -6,7 +6,8 @@ export interface IPlanData {
 }
 
 export function createPlanDataFromJson(json: JSON): IPlanData | undefined {
-  if (json === undefined) {
+  const planDataIsNotExisting: boolean = json === undefined;
+  if (planDataIsNotExisting) {
     return undefined;
   }
 

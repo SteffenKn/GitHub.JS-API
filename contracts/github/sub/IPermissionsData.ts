@@ -5,7 +5,8 @@ export interface IPermissionsData {
 }
 
 export function createPermissionsDataFromJson(json: JSON): IPermissionsData | undefined {
-  if (json === undefined) {
+  const permissionsDataIsNotExisting: boolean = json === undefined;
+  if (permissionsDataIsNotExisting) {
     return undefined;
   }
 

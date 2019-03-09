@@ -81,7 +81,8 @@ export interface ISubRepositoryData {
 }
 
 export function createSubRepositoryDataFromJson(json: JSON): ISubRepositoryData | undefined {
-  if (json === undefined) {
+  const subRepositoryIsNotExisting: boolean = json === undefined;
+  if (subRepositoryIsNotExisting) {
     return undefined;
   }
 

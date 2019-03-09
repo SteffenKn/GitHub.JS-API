@@ -7,7 +7,8 @@ export interface ILicenseData {
 }
 
 export function createLicenseDataFromJson(json: JSON): ILicenseData | null {
-  if (json === null) {
+  const licenseIsNull: boolean = json === null;
+  if (licenseIsNull) {
     return null;
   }
 

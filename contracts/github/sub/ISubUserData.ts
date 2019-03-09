@@ -20,7 +20,8 @@ export interface ISubUserData {
 }
 
 export function createSubUserDataFromJson(json: JSON): ISubUserData | null {
-  if (json === null) {
+  const subUserIsNull: boolean = json === null;
+  if (subUserIsNull) {
     return null;
   }
 

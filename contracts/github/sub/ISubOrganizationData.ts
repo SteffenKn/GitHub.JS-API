@@ -20,7 +20,8 @@ export interface ISubOrganizationData {
 }
 
 export function createSubOrganizationDataFromJson(json: JSON): ISubOrganizationData | undefined {
-  if (json === undefined) {
+  const subOrganizationIsNotExisting: boolean = json === undefined;
+  if (subOrganizationIsNotExisting) {
     return undefined;
   }
 
