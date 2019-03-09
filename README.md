@@ -385,7 +385,7 @@ A GitHub Pull Request.
     - None
 
   - Returns
-    - A promise containing the data of the repository as JSON
+    - A promise containing the data of the pull request as JSON
       - Type: JSON
 
 - asPullRequestData(): Promise<IPullRequestData>
