@@ -14,7 +14,7 @@ describe ('Pull Request Tests', () => {
   it ('Should Be Able to Get a Specific Pull Request', async () => {
     const pr = github.getUser("octocat").getRepo("Hello-World").getPullRequest(1);
 
-    const prData = await pr.asJson();
+    const prData = await pr.asPullRequestData();
     const prTitle = prData['title'];
 
     expect(prTitle).to.equal('Edited README via GitHub');

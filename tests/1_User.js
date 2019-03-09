@@ -14,8 +14,8 @@ describe ('User Tests', () => {
   it ('Should Be Able to Create an User', async () => {
     const user = github.getUser("SteffenKn");
 
-    const userData = await user.asJson();
-    const userName = userData['name'];
+    const userData = await user.asUserData();
+    const userName = userData.name;
 
     expect(userName).to.equal('Steffen Knaup');
   });
@@ -23,14 +23,14 @@ describe ('User Tests', () => {
   it ('Should Be Able to Get Data from an User', async () => {
     const user = github.getUser("SteffenKn");
 
-    const userData = await user.asJson();
-    const userName = userData['name'];
+    const userData = await user.asUserData();
+    const userName = userData.name;
 
     expect(userName).to.equal('Steffen Knaup');
   });
 
   it ('Should Not Be Able to Get Data from an Invalid User', (done) => {
-    github.getUser("Not-Existing-User").asJson()
+    github.getUser("Not-Existing-User").asUserData()
       .then(() => {
         done('Did not throw an error');
       })
