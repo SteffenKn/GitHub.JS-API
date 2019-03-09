@@ -5,7 +5,11 @@ export interface IPlanData {
   collaborators?: number;
 }
 
-export function createPlanDataFromJson(json: JSON): IPlanData {
+export function createPlanDataFromJson(json: JSON): IPlanData | undefined {
+  if (json === undefined) {
+    return undefined;
+  }
+
   const planData: IPlanData = {
     name: json['name'],
     space: json['space'],

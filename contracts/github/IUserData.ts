@@ -39,7 +39,7 @@ export interface IUserData {
   disk_usage: number;
   collaborators: number;
   two_factor_authentication: boolean;
-  plan: IPlanData;
+  plan: IPlanData | undefined;
 }
 
 export function createUserDataFromJson(json: JSON): IUserData {

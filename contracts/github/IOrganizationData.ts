@@ -34,7 +34,7 @@ export interface IOrganizationData {
   disk_usage: number;
   collaborators: number;
   billing_email: string;
-  plan: IPlanData;
+  plan: IPlanData | undefined;
   default_repository_settings: string;
   members_can_create_repositories: boolean;
   two_factor_requirement_enabled: boolean;
