@@ -1,4 +1,10 @@
-import {IOwner, IPullRequest, IRepo} from '../../contracts/index';
+import {
+  createRepositoryDataFromJson,
+  IOwner,
+  IPullRequest,
+  IRepo,
+  IRepositoryData,
+} from '../../contracts/index';
 
 import {
   ConfigService,
@@ -72,6 +78,14 @@ export class Repo {
     }
 
     return data;
+  }
+
+  public async asRepositoryData(): Promise<IRepositoryData> {
+    const data: JSON = await this.asJson();
+
+    const repoData: IRepositoryData = createRepositoryDataFromJson(data);
+
+    return repoData;
   }
 
   private _getData(): Promise<JSON> {
