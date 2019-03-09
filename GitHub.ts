@@ -102,9 +102,16 @@ export class GitHubApi {
     const httpClient: HttpClient = new HttpClient(this._configService);
 
     const userDataAsJson: JSON = await httpClient.get('/user');
+
+    const errorGettingData: boolean = userDataAsJson['message'] !== undefined;
+
+    if (errorGettingData) {
+      throw new Error(userDataAsJson['message']);
+    }
+
     const userData: IUserData = createUserDataFromJson(userDataAsJson);
 
-    const user: IUser = new User(userData.name, this._configService);
+    const user: IUser = new User(userData.login, this._configService);
     return user;
   }
 }
