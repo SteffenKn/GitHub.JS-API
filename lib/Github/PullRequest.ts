@@ -59,7 +59,7 @@ export class PullRequest {
     return data;
   }
 
-  public async asPullRequest(): Promise<IPullRequestData> {
+  public async asPullRequestData(): Promise<IPullRequestData> {
     const data: JSON = await this.asJson();
 
     const prData: IPullRequestData = createPullRequestDataFromJson(data);
