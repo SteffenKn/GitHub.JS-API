@@ -219,6 +219,16 @@ A GitHub Organization.
       - A custom configService
       - Type: ConfigService
 
+#### Functions
+
+- asOrgaData(): Promise<IOrganizationData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the organization as IOrganizationData
+      - Type: IOrganizationData
+
 ### User [extends Owner]
 
 A GitHub User.
@@ -233,6 +243,16 @@ A GitHub User.
     - configService [optional]
       - A custom configService
       - Type: ConfigService
+
+#### Functions
+
+- asUserData(): Promise<IUserData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the user as IUserData
+      - Type: IUserData
 
 ### Repo
 
@@ -273,6 +293,14 @@ A GitHub Repository.
   - Returns
     - A promise containing the data of the repository as JSON
       - Type: JSON
+
+- asRepositoryData(): Promise<IRepositoryData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the repository as IRepositoryData
+      - Type: IRepositoryData
 
 - [static] fromData(owner: Owner, data: JSON, configService?: ConfigService): Repo
   - Parameters
@@ -359,6 +387,14 @@ A GitHub Pull Request.
   - Returns
     - A promise containing the data of the repository as JSON
       - Type: JSON
+
+- asPullRequestData(): Promise<IPullRequestData>
+  - Parameters
+    - None
+
+  - Returns
+    - A promise containing the data of the pull request as IPullRequestData
+      - Type: IPullRequestData
 
 - [static] fromData(owner: Owner, repo: Repo, data: JSON, configService?: ConfigService): Pull Request
   - Parameters
