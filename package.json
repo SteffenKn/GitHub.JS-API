@@ -21,10 +21,10 @@
   "author": "Steffen Knaup",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "2.3.0"
+    "node-fetch": "2.6.1"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.1.4",
+    "@types/node-fetch": "^2.5.8",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "mocha-jenkins-reporter": "^0.4.1",
